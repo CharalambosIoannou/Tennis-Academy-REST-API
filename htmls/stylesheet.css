@@ -1,0 +1,18 @@
+body {
+  position: relative; 
+  background-image: url("images/background.jpg");
+  background-size: cover;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+U {
+  text-decoration-style: double;
+  color: #ffffff;
+
+}
