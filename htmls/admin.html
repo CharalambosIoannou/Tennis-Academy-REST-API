@@ -167,6 +167,59 @@
             <div class="card bg-light text-dark">
               <div class="card-body">
                 <h1>Create Timetable</h1>
+                <button>Insert after</button>
+                <script>
+                  
+                
+                </script>
+
+<form id="against" action="http://127.0.0.1:3000/against">
+  <div id="res"></div>
+  <p>Name: <input type="text" id="player1"> </p>
+  <p> VS</p>
+  <p>Name: <input type="text1" id="player2"></p>
+  <p>Date: <input type="text1" id="date"></p>
+  <button>Submit</button>
+</form>
+  
+  <script>
+      $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
+
+        $(function(){
+        $('button').on('click',function(){
+          var click1=false;
+        $.each(JSON.parse(data), function(index, element) {
+          
+        var test = element.username;
+        console.log(test);
+        var r= $('<input type="button" value='+test +'>' ).click(function () { 
+            
+           
+            if (click1==false){
+              document.getElementById("player1").value = test;
+              click1=true;
+              
+            }else
+             {
+              document.getElementById("player2").value = test;
+            }
+          
+          
+            });
+          $("#res").append(r);
+        });
+  
+  });
+  
+  
+  });
+  
+      });
+    
+    </script>
+  
+  
+                
         <table border=5 cellspacing=20 cellpadding=20>
             <tr>
             <td colspan="7" align="center"><I>Match Timetable</I></td>
@@ -244,10 +297,26 @@
             </tr>
             
             </table> 
+        
             </div>
             </div>
             </div>
-            <script>
+            <script> 
+            function formhandler2(){
+            var p1 = $("#player1").val();
+            var p2 = $("#player2").val();
+            var date = $("#date").val();
+            let appointment = p1 + " VS " + p2;
+            document.getElementById(date).innerHTML =date +  "<br>" + appointment;
+            $.get("http://127.0.0.1:3000/against" , "player1=" + p1 + "&" + "player2="+p2+ "&"+ "date="+date, 
+                function (data){
+                 
+                   
+                });
+            return false;
+        };
+        $('#against').on('submit', formhandler2);
+                  /*   
                 let row = $('tr');
                 row.each((index,row) =>{
                   if(index !== 0) return; // We only want 1 entry of!
@@ -260,14 +329,14 @@
               
               function addApointment() {
                   let dayNum = $(this).text();
-                  let appointment = prompt(`What would you like to add for an appointment for the ${dayNum}th?`);
-                  console.log(appointment);
+                  let player1= $("#player1").val();
+                  let player2= $("#player2").val();
+                  let appointment = player1 + " VS " + player2;
+                  
                 document.getElementById(dayNum).innerHTML =dayNum +  "<br>" + appointment;
-              }
+              }*/
+              
                 </script>
-
-
-
 
     </div>
     <div id="section4" >  

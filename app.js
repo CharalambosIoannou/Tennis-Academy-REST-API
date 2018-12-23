@@ -36,6 +36,43 @@ app.get('/people/:username',function (req,resp) {
     }
 });
 
+app.get('/against',function (req,resp) {
+    
+    const p1 = req.query.player1;
+    const p2 = req.query.player2;
+    const date= req.query.date;
+    console.log(date);
+    var found =false;
+    for (var i=0;i<obj.length;i++){
+        if (obj[i].username==p1){
+            found=true;
+            console.log(obj[i].username);
+            obj[i].opponent=p2;
+            obj[i].date=date;
+                        
+        }
+        if (obj[i].username==p2){
+            found=true;
+            console.log(obj[i].username);
+            obj[i].opponent=p1;
+            obj[i].date=date;
+        }       
+        
+    }
+    fs.writeFile("data.json", JSON.stringify(obj), function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+                console.log("The file was saved!");
+            })
+
+    if (found==false){
+        resp.send("Not found");
+    }
+    console.log("here");
+    resp.send("here");
+});
+
 app.get('/favicon.ico', (req, res) => res.sendStatus(204));
 
 /*app.post('/people',function (request,resp) { 
