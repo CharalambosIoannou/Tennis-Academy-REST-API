@@ -158,7 +158,119 @@
                 </div>
            
     </div>
-    <div id="section2" >  
+    <div id="section3">
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="container">
+            <div class="card bg-light text-dark">
+              <div class="card-body">
+                <h1>Create Timetable</h1>
+        <table border=5 cellspacing=20 cellpadding=20>
+            <tr>
+            <td colspan="7" align="center"><I>Match Timetable</I></td>
+            </tr>
+            
+            <tr>	
+            <td align=center>Mon</td>
+            <td align=center>Tue</td>
+            <td align=center>Wed</td>
+            <td align=center>Thu</td>
+            <td align=center>Fri</td>
+            <td align=center>Sat</td>
+            <td align=center>Sun</td>
+            </tr>
+            
+            <tr>
+            <td class="grayedout" align=center></td>
+            <td class="grayedout" align=center></td>
+            <td class="grayedout" align=center></td>
+            <td class="grayedout" align=center></td>
+            <td class="grayedout" align=center></td>
+            <td class="grayedout" align=center></td>
+            <td  data-href="#" id="1" align=center>1</td>
+            </tr>
+            
+            <tr>
+            <td  data-href="#" id="2" align=center>2</td>
+            <td  data-href="#" id="3" align=center>3</td>
+            <td  data-href="#" id="4" align=center>4</td>
+            <td  data-href="#" id="5" align=center>5</td>
+            <td  data-href="#" id="6" align=center>6</td>
+            <td  data-href="#" id="7" align=center>7</td>
+            <td  data-href="#" id="8" align=center>8</td>
+            </tr>
+            
+            <tr>
+            <td  data-href="#" id="9" align=center>9</td>
+            <td  data-href="#" id="10" align=center>10</td>
+            <td  data-href="#" id="11" align=center>11</td>
+            <td  data-href="#" id="12" align=center>12</td>
+            <td  data-href="#" id="13" align=center>13</td>
+            <td  data-href="#" id="14" align=center>14</td>
+            <td  data-href="#" id="15" align=center>15</td>
+            </tr>
+            
+            <tr>
+            <td data-href="#" id="16" align=center>16</td>
+            <td data-href="#" id="17" align=center>17</td>
+            <td data-href="#" id="18" align=center>18</td>
+            <td data-href="#" id="19" align=center>19</td>
+            <td data-href="#" id="20" align=center>20</td>
+            <td data-href="#" id="21" align=center>21</td>
+            <td data-href="#" id="22" align=center>22</td>
+            </tr>
+            
+            <tr>
+            <td data-href="#" id="23" align=center>23</td>
+            <td data-href="#" id="24" align=center>24</td>
+            <td data-href="#" id="25" align=center>25</td>
+            <td data-href="#" id="26" align=center>26</td>
+            <td data-href="#" id="27" align=center>27</td>
+            <td data-href="#" id="28" align=center>28</td>
+            <td data-href="#" id="29" align=center>29</td>
+            </tr>
+            
+            <tr>
+            <td data-href="#" id="30" align=center>30</td>
+            <td data-href="#" id="31" align=center>31</td>
+            <td class="grayedout" align=center></td>
+            <td class="grayedout" align=center></td>
+            <td class="grayedout" align=center></td>
+            <td class="grayedout" align=center></td>
+            <td class="grayedout" align=center></td>
+            
+            </tr>
+            
+            </table> 
+            </div>
+            </div>
+            </div>
+            <script>
+                let row = $('tr');
+                row.each((index,row) =>{
+                  if(index !== 0) return; // We only want 1 entry of!
+              
+                  $('td').each((index,day) => { // For each day
+                      if($(day).hasClass('grayedout')) return;
+                   $(day).on('click',addApointment); // The part we care about
+                  });
+              })
+              
+              function addApointment() {
+                  let dayNum = $(this).text();
+                  let appointment = prompt(`What would you like to add for an appointment for the ${dayNum}th?`);
+                  console.log(appointment);
+                document.getElementById(dayNum).innerHTML =dayNum +  "<br>" + appointment;
+              }
+                </script>
+
+
+
+
+    </div>
+    <div id="section4" >  
         <br>
         <br>
         <br>
