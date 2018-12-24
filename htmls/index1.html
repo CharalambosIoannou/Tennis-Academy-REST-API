@@ -53,20 +53,33 @@
         <ul class="nav navbar-nav navbar-right">
            
           <form id="loginForm">
-              <div id="divusername"> Username: <input id="username2"> </input> </div>
-            <li><button id="login"></a><span style="float:right;"></span> Login</button></li>
+              <div id="divusername"> Username: <input id="username2"> </input> 
+            <button id="login"></a><span style="float:right;"></span> Login</button></div>
           </form>
           </ul> 
           <script>
             var access_token="";
+            var usernameStatic="";
            function formhandler(){
                               var username = $("#username2").val();
                               $.get("http://127.0.0.1:3000/people/"  +username, 
                                   function (data){
-                                    access_token=data.access_token;
-                                    $( "#divusername" ).replaceWith("" );
-                                    $( "#username2" ).replaceWith( "" );
-                                    $( "#login" ).replaceWith( "<h3> Welcome: "+ data.username+"</h3>" );                                            
+                                    if(typeof data.username !== "undefined"){
+                                      console.log(data.username);
+                                          access_token=data.access_token;
+                                          usernameStatic=data.username;
+                                          $( "#login" ).replaceWith("" );
+                                          $( "#username2" ).replaceWith( "" );
+                                          $( "#divusername" ).replaceWith( "<h3> Welcome: "+ data.username+"</h3>" ); 
+                                    }  else {
+                                      if (window.confirm('You are not registered on our website. You will be redirected to signup page ')) 
+                                          {
+                                          window.location.href='#section5';
+                                          };
+
+                                    }
+                                   
+                                                                               
                                             });
                               return false;
                           };
@@ -498,7 +511,7 @@
                   
                 });
                   
-                $('#timePersonal').on('click',function(){                   
+                $('#timePersonal').on('click',function(){     
                 $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
                   if (access_token==""){
                     alert("You are not signed in. Sign in to see your own mathces.");
@@ -506,21 +519,17 @@
                   var x = JSON.parse(data);
                   for (var k=0; k<x.length;k++){
                     let date = x[k].date;
-                    console.log(date);
                     document.getElementById(date).innerHTML =date +  "<br>" + "";
                   }
                   for (var i = 0; i < x.length; i++){
-                    for (var j=0;j<x.length;j++){
-                      if ((x[i].date==x[j].date && x[i].username != x[j].username) && (x[i].access_token==access_token || x[j].access_token==access_token)){
-                        //console.log(x[i].date + " and " + x[j].date);
+                      if ((x[i].username==usernameStatic)){
                         var date=x[i].date;
-                        var game= x[i].username + " VS " + x[j].username;
-
+                        var game= x[i].username + " VS " + x[i].opponent;
+                        document.getElementById(date).innerHTML =date +  "<br>" + game;
                       }
-                    }
-                    console.log(game);
-                    console.log(date);
-                    document.getElementById(date).innerHTML =date +  "<br>" + game;
+                    
+                   
+                    
                   }
                   
                 }
