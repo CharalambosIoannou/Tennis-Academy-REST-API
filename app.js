@@ -115,6 +115,8 @@ app.post('/people',function (req,resp) {
             "surname" : req.body.surname,
             "age" : req.body.age,
             "email" : req.body.email,
+            "instructor" : req.body.instructor,
+            "level" : req.body.level,
             "access_token" : req.body.access_token
             });
             fs.writeFile("data.json", JSON.stringify(obj), function(err) {
@@ -124,9 +126,10 @@ app.post('/people',function (req,resp) {
                 console.log("The file was saved!");
             }); 
     resp.sendStatus(200).json("request for new person: " +req.body.username);
-    } else if (found==true){
-        resp.sendStatus(400);
-    } else if (authToken==true){
+    } else if (found===true){
+        console.log("Error 400");
+        resp.status(400).json("Already exists");
+    } else if (authToken===true){
         resp.sendStatus(403);
     }
     

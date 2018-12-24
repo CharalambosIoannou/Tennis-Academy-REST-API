@@ -54,7 +54,7 @@
             <div class="card bg-light text-dark">
               <div class="card-body">
                 <h1>List User</h1>
-                <button id="Button2">Click Me</button>
+                <button  type="button" class="btn btn-info" id="Button2">Click Me</button>
                 <div id="showDIV">
                 <table class="flexme" id="table" border="1">
                     <thead>
@@ -64,6 +64,8 @@
                         <th width="100">Surname</th>
                         <th width="100">Age</th>
                         <th width="140">Email</th>
+                        <th width="100">Instructor</th>
+                        <th width="100">Level</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -90,7 +92,9 @@
                         + val.forename + "</td><td>" 
                         + val.surname + "</td><td>"
                         + val.age + "</td><td>" 
-                        + val.email + "</td></td>" );
+                        + val.email + "</td><td>" 
+                        + val.instructor + "</td><td>" 
+                        + val.level + "</td></td>" );
   })});
           
       </script>
@@ -108,9 +112,9 @@
                     <h1>Find User</h1>
                     <form id="usernameform">
                       <div> Username: <input id="username"> </input> </div>
-                      <button id="Button">Click Me to Submit</button>                      
+                      <button  class="btn btn-outline-success" id="getUser">Click Me to Submit</button>                      
                   </form>
-                  <button id="ButtonHide">Click Me to Show/Hide</button>
+                  <button class="btn btn-outline-primary" id="ButtonHide">Click Me to Show/Hide</button>
                   <form>
                   <div id="showDIV1">
                   <table class="flexme" id="table1" border="1">
@@ -121,6 +125,8 @@
                           <th width="100">Surname</th>
                           <th width="100">Age</th>
                           <th width="140">Email</th>
+                          <th width="100">Instructor</th>
+                          <th width="100">Level</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -147,7 +153,9 @@
                                           + data.forename + "</td><td>" 
                                           + data.surname + "</td><td>"
                                           + data.age + "</td><td>" 
-                                          + data.email + "</td></td>" );            
+                                          + data.email + "</td><td>" 
+                                          + data.instructor + "</td><td>" 
+                                          + data.level + "</td></td>" );            
                                             });
                               return false;
                           };
@@ -167,56 +175,45 @@
             <div class="card bg-light text-dark">
               <div class="card-body">
                 <h1>Create Timetable</h1>
-                <button>Insert after</button>
+                <button  id="test1" class="btn btn-outline-info" >Show Users</button>
                 <script>
-                  
-                
+                  $('#test1').on('click', function() {
+                    $("#test1").prop('disabled', true);
+                  });
                 </script>
-
-<form id="against" action="http://127.0.0.1:3000/against">
-  <div id="res"></div>
-  <p>Name: <input type="text" id="player1"> </p>
-  <p> VS</p>
-  <p>Name: <input type="text1" id="player2"></p>
-  <p>Date: <input type="text1" id="date"></p>
-  <button>Submit</button>
-</form>
-  
-  <script>
-      $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
-
-        $(function(){
-        $('button').on('click',function(){
-          var click1=false;
-        $.each(JSON.parse(data), function(index, element) {
-          
-        var test = element.username;
-        console.log(test);
-        var r= $('<input type="button" value='+test +'>' ).click(function () { 
-            
-           
-            if (click1==false){
-              document.getElementById("player1").value = test;
-              click1=true;
-              
-            }else
-             {
-              document.getElementById("player2").value = test;
-            }
-          
-          
-            });
-          $("#res").append(r);
-        });
-  
-  });
-  
-  
-  });
-  
-      });
-    
-    </script>
+                <form id="against">
+                  <div id="res"></div>
+                  <span>Usernames: <input type="text" id="player1"> </span>
+                  <span> VS</span>
+                  <span> <input type="text1" id="player2"></span>
+                  <p>Date: <input type="text1" id="date"></p>
+                  <button> Submit </button>
+                </form>  
+                <script>
+                    $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
+                      $(function(){
+                        $('button').on('click',function(){
+                          $(this).prop('disabled', true);
+                          var click1=100;
+                          $.each(JSON.parse(data), function(index, element) {                        
+                            var test = element.username;
+                         
+                            var r= $('<input  type="button" class="btn btn-outline-primary" value='+test +'>' ).click(function () {              
+                              if (click1 % 2==0){
+                                document.getElementById("player1").value = test;
+                                click1=click1-1;                                
+                              }else{
+                                document.getElementById("player2").value = test;
+                                click1=click1-1;  
+                              }           
+                            });
+                          $("#res").append(r);
+                          });
+                        });
+                      });
+                    });
+                  
+                  </script>
   
   
                 
@@ -305,6 +302,10 @@
             function formhandler2(){
             var p1 = $("#player1").val();
             var p2 = $("#player2").val();
+            if (p1===p2){
+              alert("Same user is selceted.Please select another user");  
+              return;            
+            }
             var date = $("#date").val();
             let appointment = p1 + " VS " + p2;
             document.getElementById(date).innerHTML =date +  "<br>" + appointment;
@@ -349,12 +350,56 @@
               <div class="card-body">
                 <h1>Add User</h1>
                 <form id="usernameform1">
-                  <div> Username: <input id="username1"> </input> </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputEmail4">Forename</label>
+                          <input type="text" class="form-control" id="forename" placeholder="Forename">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputPassword4">Surname</label>
+                          <input type="text" class="form-control" id="surname" placeholder="Surname">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">Username</label>
+                        <input type="text" class="form-control" id="username1" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress2">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="test@test.com">
+                      </div>
+                      <div class="form-row">
+                          <div class="form-group col-md-5">
+                            <label for="inputCity">Age</label>
+                            <input type="text" class="form-control" id="age">
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="inputState">Instructor</label>
+                            <select id="instructor" class="form-control">
+                              <option selected>Choose your instructor</option>
+                              <option  data-toggle="tooltip" data-placement="right" title="Suitable for adults">Logan Taylor</option>
+                              <option  data-toggle="tooltip" data-placement="right" title="Suitable for children age less than 15">Mason Bates</option>
+                              <option  data-toggle="tooltip" data-placement="right" title="Sutiable for adults">Andrew Winter</option>
+                            </select>
+                          </div>
+                          <div class="form-group col-md-3">
+                              <label for="inputState">Level</label>
+                              <select id="level" class="form-control">
+                                <option selected>Choose your level</option>
+                                <option>Beginner</option>
+                                <option>Intermediate</option>
+                                <option>Advnaced</option>
+                              </select>
+                          </div>
+                        </div>
+                        <button id="submitButton" type="submit" class="btn btn-primary">Sign in</button>
+
+                <!--   <div> Username: <input id="username1"> </input> </div>
                   <div> Firstname: <input id="forename"> </input> </div>
                   <div> Lastname: <input id="surname"> </input> </div>
                   <div> age: <input id="age"> </input> </div>
                   <div> email: <input id="email"> </input> </div>
-                  <button id="submit">Click Me to Submit</button>                      
+                  <button id="submit">Click Me to Submit</button>   -->                   
           
               </form>
           
@@ -362,20 +407,22 @@
 
               <script>
                 
-
+               
                   function formhandler1(){
                       $.post("http://127.0.0.1:3000/people" ,{
-                          
+                          access_token : "concertina",
                           username : $("#username1").val(),
                           forename : $("#forename").val(),
                           surname : $("#surname").val(),
                           age : $("#age").val(),
                           email : $("#email").val(),
-                          access_token : "concertina"         
+                          instructor :  $("#instructor").val(),  
+                          level : $("#level").val()                           
       
       
                       } ,
                           function (data){
+                            alert(data);
                             
                               $('#usernameresult1').html(data);
                           });

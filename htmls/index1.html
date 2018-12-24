@@ -46,8 +46,33 @@
               <li class="nav-item">
                   <a class="nav-link" href="#section7">Contact us </a>
                 </li>
+              
           </ul>
-        </div>    
+          
+        </div>   
+        <ul class="nav navbar-nav navbar-right">
+           
+          <form id="loginForm">
+              <div id="divusername"> Username: <input id="username2"> </input> </div>
+            <li><button id="login"></a><span style="float:right;"></span> Login</button></li>
+          </form>
+          </ul> 
+          <script>
+            var access_token="";
+           function formhandler(){
+                              var username = $("#username2").val();
+                              $.get("http://127.0.0.1:3000/people/"  +username, 
+                                  function (data){
+                                    access_token=data.access_token;
+                                    $( "#divusername" ).replaceWith("" );
+                                    $( "#username2" ).replaceWith( "" );
+                                    $( "#login" ).replaceWith( "<h3> Welcome: "+ data.username+"</h3>" );                                            
+                                            });
+                              return false;
+                          };
+                          $('#loginForm').on('submit', formhandler);
+          </script>
+
       </nav>
       <!-- Main- Body -->
        
@@ -64,7 +89,7 @@
               <div class="card bg-light text-dark">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-sm-9" >Welcome to the Annabel Croft Tennis Academy! If you are looking for an exciting tennis coaching experience in SW London for your children in the UK or for an amazing tennis experience overseas for the whole family, the Annabel Croft Tennis Academy can offer you a range of fantastic opportunities to play the game, meet new friends and develop a love for playing tennis.
+                    <div class="col-sm-9" >Welcome to the Tennis Academy! If you are looking for an exciting tennis coaching experience in SW London for your children in the UK or for an amazing tennis experience overseas for the whole family, the Annabel Croft Tennis Academy can offer you a range of fantastic opportunities to play the game, meet new friends and develop a love for playing tennis.
                   
                                 Annabel Croft is the former British No.1 and current Sky Sports tennis presenter and you can sample the methods that she used in her tennis career and recommends for every budding tennis player! Featuring a range of high energy drills and exercises that are delivered in small coaching groups, the coaching programme offers players of all abilities a chance to reach their potential. 
                     </div>
@@ -263,32 +288,87 @@
                       <div class="card-body">
                         <div class="row">
                           <div class="col-sm-9" >                            
-                            <form action="http://127.0.0.1:8090/people">
-                              <div class="form-row">
-                                <div class="form-group col-md-6">
-                                  <label for="inputForename">Forename</label>
-                                  <input name = "Forename" type="Forename" class="form-control" id="inputForename" placeholder="Forename">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputLastname">Lastname</label>
-                                    <input name = "Lastname" type="Lastname" class="form-control" id="inputLastname" placeholder="Lastname">
+                              <form id="usernameform1">
+                                  <div class="form-row">
+                                      <div class="form-group col-md-6">
+                                        <label for="inputEmail4">Forename</label>
+                                        <input type="text" class="form-control" id="forename" placeholder="Forename">
+                                      </div>
+                                      <div class="form-group col-md-6">
+                                        <label for="inputPassword4">Surname</label>
+                                        <input type="text" class="form-control" id="surname" placeholder="Surname">
+                                    </div>
                                   </div>
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <label for="inputAge">Age</label>
-                                    <input name = "Age" type="Age" class="form-control" id="inputAge" placeholder="Age">
+                                  <div class="form-group">
+                                      <label for="inputAddress">Username</label>
+                                      <input type="text" class="form-control" id="username1" placeholder="Username">
                                   </div>
-                                <div class="form-group">
-                                    <label for="inputEmail">Email</label>
-                                    <input name = "email" type="email" class="form-control" id="inputEmail" placeholder="Email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputUsername">Username</label>
-                                    <input name = "Username" type="Username" class="form-control" id="inputUsername" placeholder="Username">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Register</button>
+                                  <div class="form-group">
+                                      <label for="inputAddress2">Email</label>
+                                      <input type="email" class="form-control" id="email" placeholder="test@test.com">
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-5">
+                                          <label for="inputCity">Age</label>
+                                          <input type="text" class="form-control" id="age">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label for="inputState">Instructor</label>
+                                          <select id="instructor" class="form-control">
+                                            <option selected>Choose your instructor</option>
+                                            <option  data-toggle="tooltip" data-placement="right" title="Suitable for adults">Logan Taylor</option>
+                                            <option  data-toggle="tooltip" data-placement="right" title="Suitable for children age less than 15">Mason Bates</option>
+                                            <option  data-toggle="tooltip" data-placement="right" title="Sutiable for adults">Andrew Winter</option>
+                                          </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="inputState">Level</label>
+                                            <select id="level" class="form-control">
+                                              <option selected>Choose your level</option>
+                                              <option>Beginner</option>
+                                              <option>Intermediate</option>
+                                              <option>Advnaced</option>
+                                            </select>
+                                        </div>
+                                      </div>
+                                      <button id="submitButton" type="submit" class="btn btn-primary">Sign in</button>
+              
+                              <!--   <div> Username: <input id="username1"> </input> </div>
+                                <div> Firstname: <input id="forename"> </input> </div>
+                                <div> Lastname: <input id="surname"> </input> </div>
+                                <div> age: <input id="age"> </input> </div>
+                                <div> email: <input id="email"> </input> </div>
+                                <button id="submit">Click Me to Submit</button>   -->                   
+                        
                             </form>
                           </div>
+                          <script>
+                
+               
+                              function formhandler1(){
+                                  $.post("http://127.0.0.1:3000/people" ,{
+                                      access_token : "concertina",
+                                      username : $("#username1").val(),
+                                      forename : $("#forename").val(),
+                                      surname : $("#surname").val(),
+                                      age : $("#age").val(),
+                                      email : $("#email").val(),
+                                      instructor :  $("#instructor").val(),  
+                                      level : $("#level").val()                           
+                  
+                  
+                                  } ,
+                                      function (data){
+                                        alert(data);
+                                        
+                                          $('#usernameresult1').html(data);
+                                      });
+                                      
+                                  return false;
+                              };
+                              $('#usernameform1').on('submit', formhandler1);
+                          
+                          </script>
                           <br>
                           <br>
                           <div class="col-sm-3">  <img class="d-block w-100" src="images/image3.jpg" alt="court"  >   </div>
@@ -298,6 +378,165 @@
                   </div>
                 </div>
               </div>
+
+        <div id="section6">
+          <br>
+          <br>
+          <br>
+          <br>
+          <div class="container">
+              <div class="card bg-light text-dark">
+                <div class="card-body">
+                  <h1>View Timetable</h1>
+                  <button id="time"> Show generalized timetable </button>
+                  <button id="timePersonal"> Show personalized timetable </button>
+            <table border=5 cellspacing=20 cellpadding=20>
+                <tr>
+                <td colspan="7" align="center"><I>Match Timetable</I></td>
+                </tr>
+                
+                <tr>	
+                <td align=center>Mon</td>
+                <td align=center>Tue</td>
+                <td align=center>Wed</td>
+                <td align=center>Thu</td>
+                <td align=center>Fri</td>
+                <td align=center>Sat</td>
+                <td align=center>Sun</td>
+                </tr>
+                
+                <tr>
+                <td class="grayedout" align=center></td>
+                <td class="grayedout" align=center></td>
+                <td class="grayedout" align=center></td>
+                <td class="grayedout" align=center></td>
+                <td class="grayedout" align=center></td>
+                <td class="grayedout" align=center></td>
+                <td  data-href="#" id="1" align=center>1</td>
+                </tr>
+                
+                <tr>
+                <td  data-href="#" id="2" align=center>2</td>
+                <td  data-href="#" id="3" align=center>3</td>
+                <td  data-href="#" id="4" align=center>4</td>
+                <td  data-href="#" id="5" align=center>5</td>
+                <td  data-href="#" id="6" align=center>6</td>
+                <td  data-href="#" id="7" align=center>7</td>
+                <td  data-href="#" id="8" align=center>8</td>
+                </tr>
+                
+                <tr>
+                <td  data-href="#" id="9" align=center>9</td>
+                <td  data-href="#" id="10" align=center>10</td>
+                <td  data-href="#" id="11" align=center>11</td>
+                <td  data-href="#" id="12" align=center>12</td>
+                <td  data-href="#" id="13" align=center>13</td>
+                <td  data-href="#" id="14" align=center>14</td>
+                <td  data-href="#" id="15" align=center>15</td>
+                </tr>
+                
+                <tr>
+                <td data-href="#" id="16" align=center>16</td>
+                <td data-href="#" id="17" align=center>17</td>
+                <td data-href="#" id="18" align=center>18</td>
+                <td data-href="#" id="19" align=center>19</td>
+                <td data-href="#" id="20" align=center>20</td>
+                <td data-href="#" id="21" align=center>21</td>
+                <td data-href="#" id="22" align=center>22</td>
+                </tr>
+                
+                <tr>
+                <td data-href="#" id="23" align=center>23</td>
+                <td data-href="#" id="24" align=center>24</td>
+                <td data-href="#" id="25" align=center>25</td>
+                <td data-href="#" id="26" align=center>26</td>
+                <td data-href="#" id="27" align=center>27</td>
+                <td data-href="#" id="28" align=center>28</td>
+                <td data-href="#" id="29" align=center>29</td>
+                </tr>
+                
+                <tr>
+                <td data-href="#" id="30" align=center>30</td>
+                <td data-href="#" id="31" align=center>31</td>
+                <td class="grayedout" align=center></td>
+                <td class="grayedout" align=center></td>
+                <td class="grayedout" align=center></td>
+                <td class="grayedout" align=center></td>
+                <td class="grayedout" align=center></td>
+                
+                </tr>
+                
+                </table> 
+                </div>
+                </div>
+                </div>
+
+                <script>
+                  $('#time').on('click',function(){
+
+                    
+                    $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
+                      if (access_token==""){
+                        alert("You are not signed in. Sign in to see all the mathces.");         
+                      
+                     }else {
+                      var x = JSON.parse(data);
+                      for (var i = 0; i < x.length; i++){
+                        for (var j=0;j<x.length;j++){
+                          if (x[i].date==x[j].date && x[i].username != x[j].username){
+                            //console.log(x[i].date + " and " + x[j].date);
+                            var date=x[i].date;
+                            var game= x[i].username + " VS " + x[j].username;
+
+                          }
+                        }
+                        document.getElementById(date).innerHTML =date +  "<br>" + game;
+                      }
+                  }
+                   });
+
+                  
+                });
+                  
+                $('#timePersonal').on('click',function(){                   
+                $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
+                  if (access_token==""){
+                    alert("You are not signed in. Sign in to see your own mathces.");
+                }else {
+                  var x = JSON.parse(data);
+                  for (var k=0; k<x.length;k++){
+                    let date = x[k].date;
+                    console.log(date);
+                    document.getElementById(date).innerHTML =date +  "<br>" + "";
+                  }
+                  for (var i = 0; i < x.length; i++){
+                    for (var j=0;j<x.length;j++){
+                      if ((x[i].date==x[j].date && x[i].username != x[j].username) && (x[i].access_token==access_token || x[j].access_token==access_token)){
+                        //console.log(x[i].date + " and " + x[j].date);
+                        var date=x[i].date;
+                        var game= x[i].username + " VS " + x[j].username;
+
+                      }
+                    }
+                    console.log(game);
+                    console.log(date);
+                    document.getElementById(date).innerHTML =date +  "<br>" + game;
+                  }
+                  
+                }
+                });
+
+
+                });
+
+                
+                
+                </script>
+
+
+
+
+        </div>
               
               
 </body>
