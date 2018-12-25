@@ -88,13 +88,15 @@
         $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
         var table = $("#table tbody");
         $.each( JSON.parse(data), function( key, val ) {
-          table.append("<tr><td>" + val.username + "</td><td>"
-                        + val.forename + "</td><td>" 
-                        + val.surname + "</td><td>"
-                        + val.age + "</td><td>" 
-                        + val.email + "</td><td>" 
-                        + val.instructor + "</td><td>" 
-                        + val.level + "</td></td>" );
+          if(val.username !="admin"){
+            table.append("<tr><td>" + val.username + "</td><td>"
+            + val.forename + "</td><td>" 
+            + val.surname + "</td><td>"
+            + val.age + "</td><td>" 
+            + val.email + "</td><td>" 
+            + val.instructor + "</td><td>" 
+            + val.level + "</td></td>" );
+          }
   })});
           
       </script>
@@ -175,38 +177,37 @@
             <div class="card bg-light text-dark">
               <div class="card-body">
                 <h1>Create Timetable</h1>
-                <button  id="test1" class="btn btn-outline-info" >Show Users</button>
-                <script>
-                  $('#test1').on('click', function() {
-                    $("#test1").prop('disabled', true);
-                  });
-                </script>
+                <button   class="btn btn-outline-info" id="workplease" >Show Users</button>
+                
                 <form id="against">
                   <div id="res"></div>
-                  <span>Usernames: <input type="text" id="player1"> </span>
+                  <span>Usernames: <input required="" oninvalid="this.setCustomValidity('Please Enter a username')" oninput="setCustomValidity('')" type="text" id="player1"> </span>
                   <span> VS</span>
-                  <span> <input type="text1" id="player2"></span>
-                  <p>Date: <input type="text1" id="date"></p>
+                  <span> <input required="" oninvalid="this.setCustomValidity('Please Enter a username')" oninput="setCustomValidity('')" type="text1" id="player2"></span>
+                  <p>Date: <input required="" oninvalid="this.setCustomValidity('Please Enter a date')" oninput="setCustomValidity('')"  type="text1" id="date" /></p>
                   <button> Submit </button>
                 </form>  
                 <script>
                     $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
                       $(function(){
-                        $('button').on('click',function(){
-                          $(this).prop('disabled', true);
+                        $('#workplease').click(function(){
+                          $('#workplease').prop('disabled', true);
                           var click1=100;
                           $.each(JSON.parse(data), function(index, element) {                        
-                            var test = element.username;
-                         
-                            var r= $('<input  type="button" class="btn btn-outline-primary" value='+test +'>' ).click(function () {              
+                            var uname = element.username;
+                            if (uname!="admin"){
+                              var r= $('<input  type="button" class="btn btn-outline-primary" value='+uname +'>' ).click(function () {              
                               if (click1 % 2==0){
-                                document.getElementById("player1").value = test;
+                                document.getElementById("player1").value = uname;
                                 click1=click1-1;                                
                               }else{
-                                document.getElementById("player2").value = test;
+                                document.getElementById("player2").value = uname;
                                 click1=click1-1;  
                               }           
                             });
+                            }                         
+                         
+                            
                           $("#res").append(r);
                           });
                         });
@@ -409,6 +410,8 @@
                 
                
                   function formhandler1(){
+
+                    
                       $.post("http://127.0.0.1:3000/people" ,{
                           access_token : "concertina",
                           username : $("#username1").val(),
@@ -417,15 +420,16 @@
                           age : $("#age").val(),
                           email : $("#email").val(),
                           instructor :  $("#instructor").val(),  
-                          level : $("#level").val()                           
-      
-      
+                          level : $("#level").val()                    
                       } ,
-                          function (data){
-                            alert(data);
-                            
+                          function (data){                            
                               $('#usernameresult1').html(data);
-                          });
+                          }).fail(
+                            function(rec, textStatus, errorThrown) {
+                              console.log(rec.responseText);  
+                              $('#usernameresult1').html(rec.responseText);                                
+                            }
+                          );
                           
                       return false;
                   };

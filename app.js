@@ -75,38 +75,18 @@ app.get('/against',function (req,resp) {
 
 app.get('/favicon.ico', (req, res) => res.sendStatus(204));
 
-/*app.post('/people',function (request,resp) { 
-    const access_token=request.body; 
-    var username=request.body.username;
-    var forename=request.body.forename;
-    var surname=request.body.surname;
-    console.log(access_token);
-    console.log(username);
-    console.log(forename);
-    console.log(surname);
-    resp.send(access_token + " " + username + " " + forename + " " + surname);
 
-});
-
-
-*/
-app.post('/people',function (req,resp) { 
-        
+app.post('/people',function (req,resp) {         
     let found = false;
-    let authToken=false;
-    
-    
+    let authToken=false;   
     for (var i =0;i<obj.length;i++){
         if (obj[i].username==req.body.username) {      
-            found=true;
-            
+            found=true;            
         }
     }
     if (req.body.access_token !="concertina"){
-        authToken=true;
-        
-    }
-          
+        authToken=true;        
+    }          
     console.log("found " +found);
     console.log("auth " + authToken); 
     if (found==false && authToken==false){
@@ -117,6 +97,8 @@ app.post('/people',function (req,resp) {
             "email" : req.body.email,
             "instructor" : req.body.instructor,
             "level" : req.body.level,
+            "opponent" :"",
+            "date" : "",
             "access_token" : req.body.access_token
             });
             fs.writeFile("data.json", JSON.stringify(obj), function(err) {
@@ -125,12 +107,11 @@ app.post('/people',function (req,resp) {
                 }
                 console.log("The file was saved!");
             }); 
-    resp.sendStatus(200).json("request for new person: " +req.body.username);
+    resp.status(200).send("Welcome to tennis academy: " +req.body.username);
     } else if (found===true){
-        console.log("Error 400");
-        resp.status(400).json("Already exists");
+        resp.status(400).send('Username alraedy exists');        
     } else if (authToken===true){
-        resp.sendStatus(403);
+        resp.status(403).send("Need access token");
     }
     
     

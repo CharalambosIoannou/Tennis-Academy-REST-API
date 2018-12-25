@@ -46,17 +46,17 @@
               <li class="nav-item">
                   <a class="nav-link" href="#section7">Contact us </a>
                 </li>
-              
+                <ul class="nav navbar-nav navbar-right">
+           
+                  <form id="loginForm">
+                      <div id="divusername"> Username: <input id="username2"> </input> 
+                    <button id="login"></a><span style="float:right;"></span> Login</button></div>
+                  </form>
+                  </ul>     
           </ul>
           
         </div>   
-        <ul class="nav navbar-nav navbar-right">
-           
-          <form id="loginForm">
-              <div id="divusername"> Username: <input id="username2"> </input> 
-            <button id="login"></a><span style="float:right;"></span> Login</button></div>
-          </form>
-          </ul> 
+        
           <script>
             var access_token="";
             var usernameStatic="";
@@ -66,11 +66,22 @@
                                   function (data){
                                     if(typeof data.username !== "undefined"){
                                       console.log(data.username);
+                                      if (data.username=="admin"){
+                                        var secretAns = prompt("In order to verify that you are admin please enter the secret word");
+                                        if (secretAns=="concertina"){
+                                          window.location.replace("http://127.0.0.1:3000/admin.html");
+                                        }else {
+                                          alert("You are not an admin");
+                                          data.username="";
+                                          access_token="";
+                                          window.location.replace("http://127.0.0.1:3000/index1.html");
+                                        }
+                                      }
                                           access_token=data.access_token;
                                           usernameStatic=data.username;
                                           $( "#login" ).replaceWith("" );
                                           $( "#username2" ).replaceWith( "" );
-                                          $( "#divusername" ).replaceWith( "<h3> Welcome: "+ data.username+"</h3>" ); 
+                                          $( "#divusername" ).replaceWith( "<h4> Welcome: "+ data.username+"</h4>" + "<button onClick='logout()'> Logout </button>" ); 
                                     }  else {
                                       if (window.confirm('You are not registered on our website. You will be redirected to signup page ')) 
                                           {
@@ -84,6 +95,9 @@
                               return false;
                           };
                           $('#loginForm').on('submit', formhandler);
+                          function logout(){
+                            location.reload();
+                          }
           </script>
 
       </nav>
@@ -485,19 +499,16 @@
                 </div>
 
                 <script>
-                  $('#time').on('click',function(){
-
-                    
+                  $('#time').on('click',function(){                    
                     $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
                       if (access_token==""){
-                        alert("You are not signed in. Sign in to see all the mathces.");         
+                        alert("You are not signed in. Sign in to see all the mathces.");      
                       
                      }else {
                       var x = JSON.parse(data);
                       for (var i = 0; i < x.length; i++){
                         for (var j=0;j<x.length;j++){
                           if (x[i].date==x[j].date && x[i].username != x[j].username){
-                            //console.log(x[i].date + " and " + x[j].date);
                             var date=x[i].date;
                             var game= x[i].username + " VS " + x[j].username;
 
@@ -522,10 +533,13 @@
                     document.getElementById(date).innerHTML =date +  "<br>" + "";
                   }
                   for (var i = 0; i < x.length; i++){
+                    for (var j=0;j<x/length;j++){
                       if ((x[i].username==usernameStatic)){
                         var date=x[i].date;
-                        var game= x[i].username + " VS " + x[i].opponent;
+                        //var game= x[i].username + " VS " + x[i].opponent;
+                        var game= x[i].username + " VS " + x[j].username;
                         document.getElementById(date).innerHTML =date +  "<br>" + game;
+                      }
                       }
                     
                    
