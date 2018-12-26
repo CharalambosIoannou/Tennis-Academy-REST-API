@@ -34,10 +34,13 @@
             </li>           
             <li class="nav-item">
                     <a class="nav-link" href="#section3">Create Timetable</a>
-                  </li>     
-              <li class="nav-item">
-                <a class="nav-link" href="#section4">Add User </a>
-              </li>
+            </li>  
+            <li class="nav-item">
+                <a class="nav-link" href="#section4">Update Rounds</a>
+            </li>     
+            <li class="nav-item">
+              <a class="nav-link" href="#section5">Add User </a>
+            </li>
 
           </ul>
         </div>    
@@ -177,21 +180,63 @@
             <div class="card bg-light text-dark">
               <div class="card-body">
                 <h1>Create Timetable</h1>
-                <button   class="btn btn-outline-info" id="workplease" >Show Users</button>
+                <form id=randomMatches>
+                  <p>Enter in the text box the round that the tournament is currently in and then press submit to generate the next pair of matches.
+                    In order to start a new tournament just enter 0 as a value and then press submit.
+                  </p>
+                  <input id="round" />
+                  <button id="sendRound"> Submit</button>
+                  <p> Here when the users or admin wants to add additional matches then the admin has to press the show users button. Then the admin should select the two users that he/she wants to organize another match and then select the date and then press submit</p>
+
+                </form>
+                <script>
+                 
+                  
+                  function formhandler4(){
+                    
+            var round = $("#round").val();
+            var date_array = [];
+            
+           
+            $.get("http://127.0.0.1:3000/createTournament" , "round=" + round, 
+            
+                function (data){
+                  console.log(data);
+                  for (var i=0 ; i < data.length ; i++){
+                    var datePlaying= data[i].value;
+                    var players = data[i].key
+                      console.log(players + " on " + datePlaying);
+                      document.getElementById(datePlaying).innerHTML=datePlaying + '<br>' + players;                              
+                  }
+                });
+                
+            return false;
+            
+        };
+        
+        
+        $('#randomMatches').on('submit', formhandler4);
+                
+                
+                
+                
+                
+                </script>
+                <button   class="btn btn-outline-info" id="showAllUsers" >Show Users</button>
                 
                 <form id="against">
                   <div id="res"></div>
-                  <span>Usernames: <input required="" oninvalid="this.setCustomValidity('Please Enter a username')" oninput="setCustomValidity('')" type="text" id="player1"> </span>
+                  <span>Usernames: <input readonly="readonly" required="" oninvalid="this.setCustomValidity('Please Enter a username')" oninput="setCustomValidity('')" type="text" id="player1"> </span>
                   <span> VS</span>
-                  <span> <input required="" oninvalid="this.setCustomValidity('Please Enter a username')" oninput="setCustomValidity('')" type="text1" id="player2"></span>
+                  <span> <input readonly="readonly" required="" oninvalid="this.setCustomValidity('Please Enter a username')" oninput="setCustomValidity('')" type="text1" id="player2"></span>
                   <p>Date: <input required="" oninvalid="this.setCustomValidity('Please Enter a date')" oninput="setCustomValidity('')"  type="text1" id="date" /></p>
                   <button> Submit </button>
                 </form>  
                 <script>
                     $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
                       $(function(){
-                        $('#workplease').click(function(){
-                          $('#workplease').prop('disabled', true);
+                        $('#showAllUsers').click(function(){
+                          $('#showAllUsers').prop('disabled', true);
                           var click1=100;
                           $.each(JSON.parse(data), function(index, element) {                        
                             var uname = element.username;
@@ -305,7 +350,8 @@
             var p2 = $("#player2").val();
             if (p1===p2){
               alert("Same user is selceted.Please select another user");  
-              return;            
+              window.location.href='#section3';  
+              document.getElementById(date).innerHTML =date;        
             }
             var date = $("#date").val();
             let appointment = p1 + " VS " + p2;
@@ -318,30 +364,73 @@
             return false;
         };
         $('#against').on('submit', formhandler2);
-                  /*   
-                let row = $('tr');
-                row.each((index,row) =>{
-                  if(index !== 0) return; // We only want 1 entry of!
-              
-                  $('td').each((index,day) => { // For each day
-                      if($(day).hasClass('grayedout')) return;
-                   $(day).on('click',addApointment); // The part we care about
-                  });
-              })
-              
-              function addApointment() {
-                  let dayNum = $(this).text();
-                  let player1= $("#player1").val();
-                  let player2= $("#player2").val();
-                  let appointment = player1 + " VS " + player2;
-                  
-                document.getElementById(dayNum).innerHTML =dayNum +  "<br>" + appointment;
-              }*/
-              
+                               
                 </script>
 
     </div>
     <div id="section4" >  
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="container">
+            <div class="card bg-light text-dark">
+              <div class="card-body">
+                <h1>Update Rounds</h1>
+                <button id="showUsersRounds">Show users</button>
+                <div id="resRound"></div>
+                <form id="rounds">
+                   
+                    <label>Winning Player </label><input id="winnerPlayer" />
+                    <label>Round Won </label><input id="winnerRound" />
+                    <button id="roundSubmit">Submit </button>
+                </form>
+              </div>
+              <script>
+                $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
+                      $(function(){
+                        $('#showUsersRounds').click(function(){
+                          $('#showUsersRounds').prop('disabled', true);
+                          
+                          $.each(JSON.parse(data), function(index, element2) {                        
+                            var uname1 = element2.username;
+                            if (uname1!="admin"){
+                              var r1= $('<input  type="button" class="btn btn-outline-primary" value='+uname1 +'>' ).click(function () {              
+                                document.getElementById("winnerPlayer").value = uname1;               
+                            });
+                          }                     
+                          $("#resRound").append(r1);
+                        
+                        });
+                      });
+                    });
+                  });
+                  $( "#roundSubmit" ).click(function() {
+                    function formhandler6(){
+            var winnerPlayer1 = $("#winnerPlayer").val();
+            var winnerRound1 = $("#winnerRound").val();
+            console.log(winnerPlayer1);
+            console.log(winnerRound1);
+            $.get("http://127.0.0.1:3000/updateRound" , "player=" + winnerPlayer1 + "&" + "round="+winnerRound1, 
+                function (data){
+                 console.log(data);
+                   
+                });
+            return false;
+        };
+        $('#rounds').on('submit', formhandler6());
+
+                  });
+                
+                               
+              
+              
+              </script>
+            </div>
+          </div>
+
+    </div>
+    <div id="section5" >  
         <br>
         <br>
         <br>

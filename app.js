@@ -117,6 +117,86 @@ app.post('/people',function (req,resp) {
     
 });
 
+app.get('/createTournament',function (req,resp) { 
+    var round=req.query.round;
+    console.log(round);
+    var dict = [];
+    var passed = [];
+    var date_array = [];
+    
+    for (var i=0; i < obj.length;i++){
+        //console.log(passed);
+        for (var k=i; k < obj.length;k++){
+            var min = Math.ceil(1);
+                      var max = Math.floor(31);
+                      var date =Math.floor(Math.random() * (max - min + 1)) + min; 
+                     // while (date_array.includes(date)){
+                        date =Math.floor(Math.random() * (max - min + 1)) + min;  
+                      //}
+                      date_array.push(date);
+            
+            if ( obj[i].username != obj[k].username && passed.includes(obj[i].username)==false && obj[i].round==round && obj[k].round==round){
+                dict.push({
+                    
+                    key : "round["+ round + "] " + obj[i].username + " VS " + obj[k].username ,
+                    value : date
+                });
+                passed.push(obj[i].username);
+                passed.push(obj[k].username);
+                
+                switch (round) {
+                    
+                    case "0":
+                    obj[i].opponent1=obj[k].username;
+                    obj[k].opponent1=obj[i].username
+                    obj[i].date1=date;
+                    obj[k].date1=date;
+                    break;
+                    case "1":
+                    obj[i].opponent2=obj[k].username;
+                    obj[k].opponent2=obj[i].username
+                    obj[i].date2=date;
+                    obj[k].date2=date;
+                    break;
+                    case "2":
+                    obj[i].opponent3=obj[k].username;
+                    obj[k].opponent3=obj[i].username
+                    obj[i].date3=date;
+                    obj[k].date3=date;
+                    break;
+                }
+                break;
+            }
+        }
+       
+    }
+    fs.writeFile("data.json", JSON.stringify(obj), function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        console.log("The file was saved!");
+    }); 
+    resp.send(dict);
+    console.log(dict);
+});
+
+app.get('/updateRound',function (req,resp) { 
+    var player=req.query.player;
+    var round=req.query.round;
+    for (var i=0 ; i < obj.length ; i++){
+        if (obj[i].username==player){
+            obj[i].round=parseInt(round)+1;
+        }
+    }
+    fs.writeFile("data.json", JSON.stringify(obj), function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        console.log("The file was saved!");
+    }); 
+    resp.send("ok");
+});
+
 
 
 module.exports=app;
