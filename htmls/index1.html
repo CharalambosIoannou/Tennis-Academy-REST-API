@@ -506,16 +506,27 @@
                       
                      }else {
                       var x = JSON.parse(data);
-                      for (var i = 0; i < x.length; i++){
-                        for (var j=0;j<x.length;j++){
-                          if (x[i].date==x[j].date && x[i].username != x[j].username){
-                            var date=x[i].date;
-                            var game= x[i].username + " VS " + x[j].username;
-
+                      for (var i = 0; i < x.length; i++){               
+                          if (x[i].username != "admin"){
+                            console.log(x[i].username);
+                            var date1=x[i].date1;                            
+                            var date2=x[i].date2;
+                            var date3=x[i].date3;
+                            var date4=x[i].date4;
+                            if(date2 != ""){
+                              var game1= x[i].username + " VS " + x[i].opponent1;
+                            document.getElementById(date1).innerHTML =date1 +  "<br>" + game1;
+                            if (date3!="") {
+                              var game2= x[i].username + " VS " + x[i].opponent2; 
+                              var game3= x[i].username + " VS " + x[i].opponent3;                            
+                              document.getElementById(date2).innerHTML =date2 +  "<br>" + game2;
+                              document.getElementById(date3).innerHTML =date3 +  "<br>" + game3;
+                             
+                            }
                           }
-                        }
-                        document.getElementById(date).innerHTML =date +  "<br>" + game;
+                          }
                       }
+                       
                   }
                    });
 
@@ -527,25 +538,34 @@
                   if (access_token==""){
                     alert("You are not signed in. Sign in to see your own mathces.");
                 }else {
-                  var x = JSON.parse(data);
-                  for (var k=0; k<x.length;k++){
-                    let date = x[k].date;
-                    document.getElementById(date).innerHTML =date +  "<br>" + "";
-                  }
-                  for (var i = 0; i < x.length; i++){
-                    for (var j=0;j<x/length;j++){
-                      if ((x[i].username==usernameStatic)){
-                        var date=x[i].date;
-                        //var game= x[i].username + " VS " + x[i].opponent;
-                        var game= x[i].username + " VS " + x[j].username;
-                        document.getElementById(date).innerHTML =date +  "<br>" + game;
+                    for (var k =1 ; k <=31 ; k++){
+                      document.getElementById(k).innerHTML =k;
+                    }
+                      var x = JSON.parse(data);
+                      for (var i = 0; i < x.length; i++){     
+                               
+                          if (x[i].username != "admin" && x[i].username==usernameStatic){
+                            var date1=x[i].date1;                            
+                            var date2=x[i].date2;
+                            var date3=x[i].date3;
+                            var date4=x[i].date4;
+                            var game1= x[i].username + " VS " + x[i].opponent1;
+                            document.getElementById(date1).innerHTML =date1 +  "<br>" + game1;
+                            if(date2 != ""){
+                              var game2= x[i].username + " VS " + x[i].opponent2;
+                            document.getElementById(date2).innerHTML =date2 +  "<br>" + game2;
+                            if (date3!="") {
+                              //var game2= x[i].username + " VS " + x[i].opponent2; 
+                              var game3= x[i].username + " VS " + x[i].opponent3;                            
+                             // document.getElementById(date2).innerHTML =date2 +  "<br>" + game2;
+                              document.getElementById(date3).innerHTML =date3 +  "<br>" + game3;
+                             
+                            }
+                          }
+                       
                       }
-                      }
-                    
-                   
-                    
+                       
                   }
-                  
                 }
                 });
 

@@ -119,23 +119,41 @@ app.post('/people',function (req,resp) {
 
 app.get('/createTournament',function (req,resp) { 
     var round=req.query.round;
-    console.log(round);
+    //console.log(round);
     var dict = [];
     var passed = [];
     var date_array = [];
+    var date;
+                      
     
     for (var i=0; i < obj.length;i++){
         //console.log(passed);
         for (var k=i; k < obj.length;k++){
-            var min = Math.ceil(1);
-                      var max = Math.floor(31);
-                      var date =Math.floor(Math.random() * (max - min + 1)) + min; 
-                     // while (date_array.includes(date)){
-                        date =Math.floor(Math.random() * (max - min + 1)) + min;  
-                      //}
-                      date_array.push(date);
-            
+                     
             if ( obj[i].username != obj[k].username && passed.includes(obj[i].username)==false && obj[i].round==round && obj[k].round==round){
+                switch (round){
+                    case "0":
+                      date =Math.floor(Math.random() * (15 - 1 + 1)) + 1;
+                      while (date_array.includes(date)){
+                        date =Math.floor(Math.random() * (15 - 1 + 1)) + 1;
+                      }
+                      date_array.push(date);
+                    break;
+                    case "1":
+                      date =Math.floor(Math.random() * (22 - 16 + 1)) + 16;
+                      while (date_array.includes(date)){
+                        date =Math.floor(Math.random() * (22 - 16 + 1)) + 16;
+                      }
+                      date_array.push(date);
+                      break;
+                    case "2":
+                      date =Math.floor(Math.random() * (31 - 23 + 1)) + 23;
+                      
+                      date_array.push(date);
+                      break;
+
+                }
+                console.log(date_array);
                 dict.push({
                     
                     key : "round["+ round + "] " + obj[i].username + " VS " + obj[k].username ,
@@ -174,7 +192,7 @@ app.get('/createTournament',function (req,resp) {
         if(err) {
             return console.log(err);
         }
-        console.log("The file was saved!");
+        //console.log("The file was saved!");
     }); 
     resp.send(dict);
     console.log(dict);
@@ -187,6 +205,22 @@ app.get('/updateRound',function (req,resp) {
         if (obj[i].username==player){
             obj[i].round=parseInt(round)+1;
         }
+    }
+    fs.writeFile("data.json", JSON.stringify(obj), function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        console.log("The file was saved!");
+    }); 
+    resp.send("ok");
+});
+
+app.get('/newTournament',function (req,resp) { 
+    for (var i=0 ; i < obj.length ; i++){
+       obj[i].date1="";
+       obj[i].date2="";
+       obj[i].date3="";
+       obj[i].date4="";
     }
     fs.writeFile("data.json", JSON.stringify(obj), function(err) {
         if(err) {
