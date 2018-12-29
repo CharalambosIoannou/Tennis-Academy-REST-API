@@ -41,6 +41,9 @@
             <li class="nav-item">
               <a class="nav-link" href="#section5">Add User </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#section6">Create New Tournament </a>
+            </li>
 
           </ul>
         </div>    
@@ -185,7 +188,7 @@
                     In order to start a new tournament just enter 0 as a value and then press submit.
                   </p>
                   <input id="round" />
-                  <button id="sendRound"> Submit</button>
+                  <button class="btn btn-outline-dark" id="sendRound"> Submit</button>
                   <p> Here when the users or admin wants to add additional matches then the admin has to press the show users button. Then the admin should select the two users that he/she wants to organize another match and then select the date and then press submit</p>
 
                 </form>
@@ -230,7 +233,7 @@
                   <span> VS</span>
                   <span> <input readonly="readonly" required="" oninvalid="this.setCustomValidity('Please Enter a username')" oninput="setCustomValidity('')" type="text1" id="player2"></span>
                   <p>Date: <input required="" oninvalid="this.setCustomValidity('Please Enter a date')" oninput="setCustomValidity('')"  type="text1" id="date" /></p>
-                  <button> Submit </button>
+                  <button class="btn btn-outline-dark" > Submit </button>
                 </form>  
                 <script>
                     $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
@@ -377,13 +380,14 @@
             <div class="card bg-light text-dark">
               <div class="card-body">
                 <h1>Update Rounds</h1>
-                <button id="showUsersRounds">Show users</button>
+                <button class="btn btn-outline-info" id="showUsersRounds">Show users</button>
                 <div id="resRound"></div>
                 <form id="rounds">
                    
                     <label>Winning Player </label><input id="winnerPlayer" />
                     <label>Round Won </label><input id="winnerRound" />
                     <button id="roundSubmit">Submit </button>
+                    <div id="resUpdateRound"></div>
                 </form>
               </div>
               <script>
@@ -414,6 +418,7 @@
             $.get("http://127.0.0.1:3000/updateRound" , "player=" + winnerPlayer1 + "&" + "round="+winnerRound1, 
                 function (data){
                  console.log(data);
+                 $( "#resUpdateRound" ).html(data);
                    
                 });
             return false;
@@ -525,8 +530,50 @@
                   $('#usernameform1').on('submit', formhandler1);
               
               </script>
-
     </div>
+    </div>
+    <div id="section6">
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="container">
+          <div class="card bg-light text-dark">
+            <div class="card-body">
+              <h1>Create New Tournament</h1>
+              <button  type="button"  class="btn btn-outline-info" id="winnerButton">Get winner</button>
+              <button  type="button"  class="btn btn-outline-danger" id="newTourButton">Create new Tournament</button>
+
+            </div>
+            
+          </div>
+        </div>
+        <script>
+           $(document).ready(function () {            
+            $('#winnerButton').click(function () {
+                  $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
+                  $.each( JSON.parse(data), function( key, val ) {
+                    if (val.round==3){
+                      alert("The winner is: " + val.username);
+                    } 
+                    });
+                   //alert("Tournament currently in progress");
+                  });
+              });
+              });
+
+              $(document).ready(function () {            
+            $('#newTourButton').click(function () {
+                  $.getJSON( "http://127.0.0.1:3000/newTournament", function( data ) {
+                    
+                  });
+                  alert("New tournament has been created");
+              });
+              });
+
+          
+      
+        </script>
     </body>
 
     </html>

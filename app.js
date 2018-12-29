@@ -129,7 +129,7 @@ app.get('/createTournament',function (req,resp) {
     for (var i=0; i < obj.length;i++){
         //console.log(passed);
         for (var k=i; k < obj.length;k++){
-                     
+           if (obj[i].username != "admin" && obj[k].username !="admin"){
             if ( obj[i].username != obj[k].username && passed.includes(obj[i].username)==false && obj[i].round==round && obj[k].round==round){
                 switch (round){
                     case "0":
@@ -188,6 +188,7 @@ app.get('/createTournament',function (req,resp) {
         }
        
     }
+}
     fs.writeFile("data.json", JSON.stringify(obj), function(err) {
         if(err) {
             return console.log(err);
@@ -206,13 +207,19 @@ app.get('/updateRound',function (req,resp) {
             obj[i].round=parseInt(round)+1;
         }
     }
+
     fs.writeFile("data.json", JSON.stringify(obj), function(err) {
         if(err) {
             return console.log(err);
         }
         console.log("The file was saved!");
     }); 
-    resp.send("ok");
+    round=parseInt(round)+1;
+    if (round==3){
+        resp.send( player + " is the winner");
+    }else {
+    resp.send( player + " will proceed to round " + round);
+    }
 });
 
 app.get('/newTournament',function (req,resp) { 
@@ -221,6 +228,11 @@ app.get('/newTournament',function (req,resp) {
        obj[i].date2="";
        obj[i].date3="";
        obj[i].date4="";
+       obj[i].opponent1="";
+       obj[i].opponent2="";
+       obj[i].opponent3="";
+       obj[i].round=0;
+
     }
     fs.writeFile("data.json", JSON.stringify(obj), function(err) {
         if(err) {
@@ -228,7 +240,7 @@ app.get('/newTournament',function (req,resp) {
         }
         console.log("The file was saved!");
     }); 
-    resp.send("ok");
+    resp.send("New Torunament was created");
 });
 
 

@@ -46,15 +46,13 @@
               <li class="nav-item">
                   <a class="nav-link" href="#section7">Contact us </a>
                 </li>
-                <ul class="nav navbar-nav navbar-right">
-           
-                  <form id="loginForm">
-                      <div id="divusername"> Username: <input id="username2"> </input> 
-                    <button id="login"></a><span style="float:right;"></span> Login</button></div>
-                  </form>
-                  </ul>     
+                
           </ul>
-          
+          <form  align="right" class="form-inline my-2 my-lg-0" id="loginForm">
+              <input type="text" class="form-control" placeholder="Username" id="username2"> </input> 
+              <button class="btn btn-outline-primary"  id="login"> Login</button>
+          </form>
+             
         </div>   
         
           <script>
@@ -79,9 +77,9 @@
                                       }
                                           access_token=data.access_token;
                                           usernameStatic=data.username;
-                                          $( "#login" ).replaceWith("" );
+                                         // $( "#login" ).replaceWith("" );
                                           $( "#username2" ).replaceWith( "" );
-                                          $( "#divusername" ).replaceWith( "<h4> Welcome: "+ data.username+"</h4>" + "<button onClick='logout()'> Logout </button>" ); 
+                                          $( "#login" ).replaceWith( "<h4 style='color:#ffffff'> Welcome: "+ data.username+"</h4>" + "<button class='btn btn-outline-primary' onClick='logout()'> Logout </button>" ); 
                                     }  else {
                                       if (window.confirm('You are not registered on our website. You will be redirected to signup page ')) 
                                           {
@@ -415,8 +413,8 @@
               <div class="card bg-light text-dark">
                 <div class="card-body">
                   <h1>View Timetable</h1>
-                  <button id="time"> Show generalized timetable </button>
-                  <button id="timePersonal"> Show personalized timetable </button>
+                  <button class="btn btn-outline-secondary" id="time"> Show generalized timetable </button>
+                  <button class="btn btn-outline-secondary" id="timePersonal"> Show personalized timetable </button>
             <table border=5 cellspacing=20 cellpadding=20>
                 <tr>
                 <td colspan="7" align="center"><I>Match Timetable</I></td>
@@ -513,13 +511,14 @@
                             var date2=x[i].date2;
                             var date3=x[i].date3;
                             var date4=x[i].date4;
-                            if(date2 != ""){
-                              var game1= x[i].username + " VS " + x[i].opponent1;
+                            var game1= x[i].username + " VS " + x[i].opponent1;
                             document.getElementById(date1).innerHTML =date1 +  "<br>" + game1;
-                            if (date3!="") {
+                            if(date2 != ""){
                               var game2= x[i].username + " VS " + x[i].opponent2; 
-                              var game3= x[i].username + " VS " + x[i].opponent3;                            
                               document.getElementById(date2).innerHTML =date2 +  "<br>" + game2;
+                            if (date3!="") {                              
+                              var game3= x[i].username + " VS " + x[i].opponent3;               
+                              
                               document.getElementById(date3).innerHTML =date3 +  "<br>" + game3;
                              
                             }
@@ -561,8 +560,7 @@
                               document.getElementById(date3).innerHTML =date3 +  "<br>" + game3;
                              
                             }
-                          }
-                       
+                          }                       
                       }
                        
                   }
