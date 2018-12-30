@@ -7,6 +7,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "file-system": "^2.2.2",
+    "jquery-bracket": "^0.11.1",
     "nodemon": "^1.18.9",
     "supertest": "^3.3.0"
   },
@@ -16,7 +17,6 @@
   },
   "scripts": {
     "test": "jest",
-
     "dev": "nodemon server.js",
     "start": "node server.js"
   },
