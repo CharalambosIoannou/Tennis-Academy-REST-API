@@ -16,7 +16,7 @@
 <body data-spy="scroll" data-target=".navbar" data-offset="50" background="background.jpg" >
     <!-- Navigation bar code-->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">  
-        <a class="navbar-brand" href="index.html">Tennis Academy</a>
+        <a class="navbar-brand" href="index1.html">Tennis Academy</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>      
@@ -79,7 +79,7 @@
                                           usernameStatic=data.username;
                                          // $( "#login" ).replaceWith("" );
                                           $( "#username2" ).replaceWith( "" );
-                                          $( "#login" ).replaceWith( "<h4 style='color:#ffffff'> Welcome: "+ data.username+"</h4>" + "<button class='btn btn-outline-primary' onClick='logout()'> Logout </button>" ); 
+                                          $( "#login" ).replaceWith( "<h5 style='color:#ffffff'> Welcome: "+ data.username+"</h5>" + "<button class='btn btn-outline-primary' onClick='logout()'> Logout </button>" ); 
                                     }  else {
                                       if (window.confirm('You are not registered on our website. You will be redirected to signup page ')) 
                                           {
@@ -114,9 +114,11 @@
               <div class="card bg-light text-dark">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-sm-9" >Welcome to the Tennis Academy! If you are looking for an exciting tennis coaching experience in SW London for your children in the UK or for an amazing tennis experience overseas for the whole family, the Annabel Croft Tennis Academy can offer you a range of fantastic opportunities to play the game, meet new friends and develop a love for playing tennis.
-                  
-                                Annabel Croft is the former British No.1 and current Sky Sports tennis presenter and you can sample the methods that she used in her tennis career and recommends for every budding tennis player! Featuring a range of high energy drills and exercises that are delivered in small coaching groups, the coaching programme offers players of all abilities a chance to reach their potential. 
+                    <div class="col-sm-9" >
+                        Welcome to Tennis Academy. Here everyone of any age can learn how to play tennis and become a professional athlete if they want to. 
+                        Our academy provides a very special and professional program which includes morning and afternoon training, physical condition training, weight exercises and many more.
+                        We offer training for all ages and for all levels. We believe in a serious, professional approach, cultivating skills and honing technique, but without compromising the love for tennis. 
+                        Our coaches strive to bring the best out of all players and closely monitor and assess their progress. 
                     </div>
                     <br>
                     <br>
@@ -172,6 +174,7 @@
           <br>
           <br>
           <br>          
+          
           <div class="container">
               <div class="card bg-light text-dark">
                   <div class="card-body">
@@ -372,23 +375,28 @@
                
                               function formhandler1(){
                                   $.post("http://127.0.0.1:3000/people" ,{
-                                      access_token : "concertina",
-                                      username : $("#username1").val(),
-                                      forename : $("#forename").val(),
-                                      surname : $("#surname").val(),
-                                      age : $("#age").val(),
-                                      email : $("#email").val(),
-                                      instructor :  $("#instructor").val(),  
-                                      level : $("#level").val()                           
-                  
-                  
+                                    access_token : "concertina",
+                                    username : $("#username1").val(),
+                                    forename : $("#forename").val(),
+                                    surname : $("#surname").val(),
+                                    age : $("#age").val(),
+                                    email : $("#email").val(),
+                                    instructor :  $("#instructor").val(),  
+                                    level : $("#level").val(),   
+                                    opponent1 : "",
+                                    opponent2 : "",
+                                    opponent3 : "",    
+                                    date1 : "",    
+                                    date2 : "",
+                                    date3 : "", 
+                                    round : ""                         
+
                                   } ,
                                       function (data){
                                         alert(data);
                                         
                                           $('#usernameresult1').html(data);
                                       });
-                                      
                                   return false;
                               };
                               $('#usernameform1').on('submit', formhandler1);
