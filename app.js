@@ -76,7 +76,49 @@ app.get('/against',function (req,resp) {
 app.get('/favicon.ico', (req, res) => res.sendStatus(204));
 
 
-app.post('/people',function (req,resp) {         
+app.post('/people',function (req,resp) {   
+    console.log("header: " + JSON.stringify(req.headers));  
+    console.log("body: " + JSON.stringify(req.body));  
+    if (JSON.stringify(req.body) == "{}"){
+
+        let found = false;
+        let authToken=false;   
+        for (var i =0;i<obj.length;i++){
+            if (obj[i].username==req.headers.username) {      
+                found=true;            
+            }
+        }
+        if (req.body.access_token !="concertina"){
+            authToken=true;        
+        }          
+        console.log("found " +found);
+        console.log("auth " + authToken); 
+        if (found==false && authToken==false){
+             obj.push({ "username":req.headers.username, 
+                "forename" : req.headers.forename,
+                "surname" : req.headers.surname,
+                "age" : req.headers.age,
+                "email" : req.headers.email,
+                "instructor" : req.headers.instructor,
+                "level" : req.headers.level,
+                "opponent" :"",
+                "date" : "",
+                "access_token" : req.headers.access_token
+                });
+                fs.writeFile("data.json", JSON.stringify(obj), function(err) {
+                    if(err) {
+                        return console.log(err);
+                    }
+                    console.log("The file was saved!");
+                }); 
+        resp.status(200).send("Welcome to tennis academy: " +req.headers.username);
+        } else if (found===true){
+            resp.status(400).send('Username alraedy exists');        
+        } else if (authToken===true){
+            resp.status(403).send("Need access token");
+        }
+
+    } else {
     let found = false;
     let authToken=false;   
     for (var i =0;i<obj.length;i++){
@@ -113,7 +155,7 @@ app.post('/people',function (req,resp) {
     } else if (authToken===true){
         resp.status(403).send("Need access token");
     }
-    
+}
     
 });
 
