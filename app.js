@@ -14,6 +14,7 @@ var fs=require('fs');
 var obj = JSON.parse(fs.readFileSync('data.json','utf8'));
 
 
+
 app.get('/people',function (req,resp) {     
     var myJSON = JSON.stringify(obj);
     resp.set('Content-Type', 'application/json');
@@ -94,16 +95,25 @@ app.post('/people',function (req,resp) {
         console.log("found " +found);
         console.log("auth " + authToken); 
         if (found==false && authToken==false){
-             obj.push({ "username":req.headers.username, 
+             obj.push({ "access_token" : req.headers.access_token,
+             "username":req.headers.username, 
                 "forename" : req.headers.forename,
                 "surname" : req.headers.surname,
                 "age" : req.headers.age,
                 "email" : req.headers.email,
                 "instructor" : req.headers.instructor,
                 "level" : req.headers.level,
-                "opponent" :"",
-                "date" : "",
-                "access_token" : req.headers.access_token
+                "opponent1" :"",
+                "opponent2" :"",
+                "opponent3" :"",
+                "opponent4" :"",
+                "date1" : "",
+                "date2" : "",
+                "date3" : "",
+                "date4" : "",
+                "round" : 0
+
+                
                 });
                 fs.writeFile("data.json", JSON.stringify(obj), function(err) {
                     if(err) {
@@ -132,16 +142,25 @@ app.post('/people',function (req,resp) {
     console.log("found " +found);
     console.log("auth " + authToken); 
     if (found==false && authToken==false){
-         obj.push({ "username":req.body.username, 
+         obj.push({ 
+            "access_token" : req.body.access_token,
+             "username":req.body.username, 
             "forename" : req.body.forename,
             "surname" : req.body.surname,
             "age" : req.body.age,
             "email" : req.body.email,
             "instructor" : req.body.instructor,
             "level" : req.body.level,
-            "opponent" :"",
-            "date" : "",
-            "access_token" : req.body.access_token
+            "opponent1" :"",
+            "opponent2" :"",
+            "opponent3" :"",
+            "opponent4" :"",
+            "date1" : "",
+            "date2" : "",
+            "date3" : "",
+            "date4" : "",
+            "round" : 0
+            
             });
             fs.writeFile("data.json", JSON.stringify(obj), function(err) {
                 if(err) {
@@ -166,31 +185,45 @@ app.get('/createTournament',function (req,resp) {
     var passed = [];
     var date_array = [];
     var date;
-                      
+    var length= obj.length;
+    if (length-1 % 2 != 0) {
+        length-=1;
+    }
+           
     
-    for (var i=0; i < obj.length;i++){
+    for (var i=0; i < length;i++){
         //console.log(passed);
-        for (var k=i; k < obj.length;k++){
+        for (var k=i; k < length;k++){
            if (obj[i].username != "admin" && obj[k].username !="admin"){
             if ( obj[i].username != obj[k].username && passed.includes(obj[i].username)==false && obj[i].round==round && obj[k].round==round){
+               console.log(obj[i].username);
                 switch (round){
                     case "0":
-                      date =Math.floor(Math.random() * (15 - 1 + 1)) + 1;
+                      date =Math.floor(Math.random() * (10 - 1 + 1)) + 1;
                       while (date_array.includes(date)){
-                        date =Math.floor(Math.random() * (15 - 1 + 1)) + 1;
+                        date =Math.floor(Math.random() * (10 - 1 + 1)) + 1;
                       }
                       date_array.push(date);
                     break;
                     case "1":
-                      date =Math.floor(Math.random() * (22 - 16 + 1)) + 16;
+                      date =Math.floor(Math.random() * (17 - 12 + 1)) + 12;
                       while (date_array.includes(date)){
-                        date =Math.floor(Math.random() * (22 - 16 + 1)) + 16;
+                        date =Math.floor(Math.random() * (17 - 12 + 1)) + 12;
                       }
                       date_array.push(date);
                       break;
                     case "2":
-                      date =Math.floor(Math.random() * (31 - 23 + 1)) + 23;
-                      
+                      date =Math.floor(Math.random() * (25 - 19 + 1)) + 19;
+                      while (date_array.includes(date)){
+                        date =Math.floor(Math.random() * (25 - 19 + 1)) + 19;
+                      }
+                      date_array.push(date);
+                      break;
+                      case "3":
+                      date =Math.floor(Math.random() * (30 - 27 + 1)) + 27;
+                      while (date_array.includes(date)){
+                        date =Math.floor(Math.random() * (30 - 27 + 1)) + 27;
+                      }
                       date_array.push(date);
                       break;
 
@@ -208,35 +241,87 @@ app.get('/createTournament',function (req,resp) {
                     
                     case "0":
                     obj[i].opponent1=obj[k].username;
-                    obj[k].opponent1=obj[i].username
+                    obj[k].opponent1=obj[i].username;
                     obj[i].date1=date;
                     obj[k].date1=date;
                     break;
                     case "1":
                     obj[i].opponent2=obj[k].username;
-                    obj[k].opponent2=obj[i].username
+                    obj[k].opponent2=obj[i].username;
                     obj[i].date2=date;
                     obj[k].date2=date;
                     break;
                     case "2":
                     obj[i].opponent3=obj[k].username;
-                    obj[k].opponent3=obj[i].username
+                    obj[k].opponent3=obj[i].username;
                     obj[i].date3=date;
                     obj[k].date3=date;
                     break;
+                    case "3":
+                    obj[i].opponent4=obj[k].username;
+                    obj[k].opponent4=obj[i].username;
+                    obj[i].date4=date;
+                    obj[k].date4=date;
+                    break;
                 }
-                break;
+                //break;
             }
+            if (length   % 2 != 0) {
+                switch(round){
+                    case "0":
+                    console.log("Last: " + obj[length].username);
+                    obj[length].opponent1="Mason Bates";
+                    obj[length].date1="11";
+                    dict.push({
+                        key : "round["+ round + "] " + obj[length].username + " VS " + "Mason Bates" ,
+                        value : "11"
+                    });
+                    break;
+                    case "1":
+                    obj[length].opponent2="Mason Bates";
+                    obj[length].date2="18";
+                    dict.push({
+                        key : "round["+ round + "] " + obj[length].username + " VS " + "Mason Bates" ,
+                        value : "18"
+                    });
+                    break;
+                    case "2":
+                    obj[length].opponent3="Mason Bates";
+                    obj[length].date3="26";
+                    dict.push({
+                        key : "round["+ round + "] " + obj[length].username + " VS " + "Mason Bates" ,
+                        value : "26"
+                    });
+                    break;
+                    case "3":
+                    obj[length].opponent4="Mason Bates";
+                    obj[length].date4="31";
+                    dict.push({
+                        key : "round["+ round + "] " + obj[length].username + " VS " + "Mason Bates" ,
+                        value : "31"
+                    });
+                    break;
+                    
+                }
+            }
+              
+            
         }
        
     }
+  
+    
+        fs.writeFile("data.json", JSON.stringify(obj), function(err) {
+            if(err) {
+                return console.log(err);
+            }
+            //console.log("The file was saved!");
+        }); 
+       
 }
-    fs.writeFile("data.json", JSON.stringify(obj), function(err) {
-        if(err) {
-            return console.log(err);
-        }
-        //console.log("The file was saved!");
-    }); 
+
+
+    
     resp.send(dict);
     console.log(dict);
 });
@@ -247,9 +332,11 @@ app.get('/updateRound',function (req,resp) {
     for (var i=0 ; i < obj.length ; i++){
         if (obj[i].username==player){
             obj[i].round=parseInt(round)+1;
+            
         }
     }
-
+      
+    
     fs.writeFile("data.json", JSON.stringify(obj), function(err) {
         if(err) {
             return console.log(err);
@@ -257,10 +344,12 @@ app.get('/updateRound',function (req,resp) {
         console.log("The file was saved!");
     }); 
     round=parseInt(round)+1;
-    if (round==3){
+    if (round==3 && obj.length==9){
+        resp.send( player + " is the winner");
+    }else if ((round==3 && obj.length==10) || (round==3 && obj.length==11))  {
         resp.send( player + " is the winner");
     }else {
-    resp.send( player + " will proceed to round " + round);
+        resp.send( player + " will proceed to round " + round);
     }
 });
 
@@ -273,6 +362,7 @@ app.get('/newTournament',function (req,resp) {
        obj[i].opponent1="";
        obj[i].opponent2="";
        obj[i].opponent3="";
+       obj[i].opponent4="";
        obj[i].round=0;
 
     }
