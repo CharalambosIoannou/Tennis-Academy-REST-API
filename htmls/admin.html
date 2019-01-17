@@ -323,25 +323,76 @@
             </div>
             </div>
             <script> 
-            var round = 0;
-            var countMatches = 0;
-            
-              console.log("round out " + round);
-              console.log("Matches out " + countMatches);
-               if((round == 0) || (round == 1 && countMatches == 4) || (round == 2 && countMatches == 2) || (round == 3 && countMatches == 1)){
-              function formhandler4(){
+            $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
+                      
+                      var x = JSON.parse(data);
+                      for (var i = 0; i < x.length; i++){               
+                          if (x[i].username != "admin"){
+                            console.log(x[i].username);
+                            if (x[i].date1==""){
+                              return;
+                            }
+                           /* if (x[i].date != ""){
+                              var date= x[i].date;
+                              var game = x[i].username + " VS " + x[i].opponent;
+                              document.getElementById(date).innerHTML =date +  "<br>" + game;
+                            }*/
+                            var date1=x[i].date1;                            
+                            var date2=x[i].date2;
+                            var date3=x[i].date3;
+                            var date4=x[i].date4;
+                            var game1=x[i].username + " VS " + x[i].opponent1;
+                            document.getElementById(date1).innerHTML = date1 + "<br>" + "round[" + x[i].round + "]" + " " +  "<br>" + game1;
+                            if(date2 != ""){
+                              var game2= x[i].username + " VS " + x[i].opponent2; 
+                              document.getElementById(date2).innerHTML =date2 + "<br>" + "round[" + x[i].round + "]" + " " +  "<br>" + game2;
+                            if (date3!="") {                              
+                              var game3= x[i].username + " VS " + x[i].opponent3;               
+                              
+                              document.getElementById(date3).innerHTML =date3 + "<br>" + "round[" + x[i].round + "]" + " " +  "<br>" + game3;
+                             
+                            }
+                          }
+                          }
+                      }
+                       
                   
+                   });
+            
+            if (localStorage.getItem("countMatches") == null){
+              var countMatches = 0;
+              var round = 0;
+              round = parseInt(round);
+            }else {
+            var countMatches = localStorage.getItem("countMatches");
+            var round = localStorage.getItem("round");
+            countMatches= parseInt(countMatches);
+            round = parseInt(round);
+            }
+            
+                   console.log("storage Matches" + countMatches);
+                   console.log("storage Round " + round);
+              function formhandler4(){
+                if((round == 0) || (round == 1 && countMatches == 4) || (round == 2 && countMatches == 2) || (round == 3 && countMatches == 1)){
+                  alert("Round over");
+                }else {
+                  alert("Round not over");
+                  localStorage.setItem("countMatches", countMatches);
+                  localStorage.setItem("round", round);
+                  return;
+                }
                  
                 
                   var date_array = [];
                   
-                  console.log("round in" + round);
-                  console.log("Matches in " + countMatches);
+                  console.log("round: " + round);
+                  console.log("Matches:  " + countMatches);
                   $.get("http://127.0.0.1:3000/createTournament" , "round=" + round, 
                   
                       function (data){
                         console.log(data);
                         round+=1;
+                        
                         countMatches=0;
                         for (var i=0 ; i < data.length ; i++){
                           var datePlaying= data[i].value;
@@ -356,7 +407,7 @@
               };
              
               $('#randomMatches').on('submit', formhandler4);
-            }
+           
        
 
             let row = $('tr');
@@ -434,6 +485,7 @@
                //  console.log(data);
                  alert(data);
                    countMatches+=1;
+                   //round +=1;
                 });
         }
         
@@ -689,6 +741,8 @@
                   $.getJSON( "http://127.0.0.1:3000/newTournament", function( data ) {
                     
                   });
+                  localStorage.setItem("countMatches", 0);
+                  localStorage.setItem("round", 0);
                   alert("New tournament has been created");
               });
               });

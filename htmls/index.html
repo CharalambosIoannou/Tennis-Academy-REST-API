@@ -48,11 +48,12 @@
                 </li>
                 
           </ul>
+ 
           <form  align="right" class="form-inline my-2 my-lg-0" id="loginForm">
               <input type="text" class="form-control" placeholder="Username" id="username2"> </input> 
               <button class="btn btn-outline-primary"  id="login"> Login</button>
           </form>
-             
+
         </div>   
         
           <script>
@@ -525,14 +526,14 @@
                             var date3=x[i].date3;
                             var date4=x[i].date4;
                             var game1= x[i].username + " VS " + x[i].opponent1;
-                            document.getElementById(date1).innerHTML =date1 +  "<br>" + game1;
+                            document.getElementById(date1).innerHTML =date1 + "<br>" + "round[" + x[i].round + "]" + " " +  "<br>" + game1;
                             if(date2 != ""){
                               var game2= x[i].username + " VS " + x[i].opponent2; 
-                              document.getElementById(date2).innerHTML =date2 +  "<br>" + game2;
+                              document.getElementById(date2).innerHTML =date2 + "<br>" + "round[" + x[i].round + "]" + " " +  "<br>" + game2;
                             if (date3!="") {                              
                               var game3= x[i].username + " VS " + x[i].opponent3;               
                               
-                              document.getElementById(date3).innerHTML =date3 +  "<br>" + game3;
+                              document.getElementById(date3).innerHTML =date3 + "<br>" + "round[" + x[i].round + "]" + " " +  "<br>" + game3;
                              
                             }
                           }
@@ -567,15 +568,15 @@
                             var date3=x[i].date3;
                             var date4=x[i].date4;
                             var game1= x[i].username + " VS " + x[i].opponent1;
-                            document.getElementById(date1).innerHTML =date1 +  "<br>" + game1;
+                            document.getElementById(date1).innerHTML =date1 + "<br>" + "round[" + x[i].round + "]" + " " +  "<br>" + game1;
                             if(date2 != ""){
                               var game2= x[i].username + " VS " + x[i].opponent2;
-                            document.getElementById(date2).innerHTML =date2 +  "<br>" + game2;
+                            document.getElementById(date2).innerHTML =date2 + "<br>" + "round[" + x[i].round + "]" + " " +  "<br>" + game2;
                             if (date3!="") {
                               //var game2= x[i].username + " VS " + x[i].opponent2; 
                               var game3= x[i].username + " VS " + x[i].opponent3;                            
                              // document.getElementById(date2).innerHTML =date2 +  "<br>" + game2;
-                              document.getElementById(date3).innerHTML =date3 +  "<br>" + game3;
+                              document.getElementById(date3).innerHTML =date3 + "<br>" + "round[" + x[i].round + "]" + " " +  "<br>" + game3;
                              
                             }
                           }                       
@@ -584,20 +585,40 @@
                   }
                 }
                 });
-
-
                 });
-
-                
-                
                 </script>
-
-
-
-
         </div>
-              
-              
+        </div>
+        </div>
+        </div>
+
+        <div id="section7">
+            <br>
+            <br>
+            <br>
+            <br>
+          <div class="container">
+            <div class="card bg-light text-dark">
+              <div class="card-body">
+                <h1>Contact Us</h1>
+              </div>
+              <div class="card bg-light text-dark">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-9" >
+                        <i> <u  style= "color: black">  <h1 style= "color: black">Email Address: </h1> </u>  </i>
+                        <h3 style= "color: rgba(185,213,45,.6)"> tennisacademy@tennis.com</h3> 
+                    </div>
+                    <br>
+                    <br>
+                    <div class="col-sm-3">  <img class="d-block w-100" src="images/kidsbackground.jpg" alt="court"  >   </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
 </body>
 
 </html>

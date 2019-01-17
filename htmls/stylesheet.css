@@ -29,3 +29,8 @@ table td[data-href] {
     background-color: #d3d3d3;
     font-size: 12;
 }
+i {
+    text-decoration: underline;
+    -webkit-text-decoration-color: red; /* Safari */  
+    text-decoration-color: red;
+  }
