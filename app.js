@@ -186,9 +186,7 @@ app.get('/createTournament',function (req,resp) {
     var date_array = [];
     var date;
     var length= obj.length;
-    if (length-1 % 2 != 0) {
-        length-=1;
-    }
+
            
     
     for (var i=0; i < length;i++){
@@ -266,46 +264,6 @@ app.get('/createTournament',function (req,resp) {
                 }
                 //break;
             }
-            if (length   % 2 != 0) {
-                switch(round){
-                    case "0":
-                    console.log("Last: " + obj[length].username);
-                    obj[length].opponent1="Mason Bates";
-                    obj[length].date1="11";
-                    dict.push({
-                        key : "round["+ round + "] " + obj[length].username + " VS " + "Mason Bates" ,
-                        value : "11"
-                    });
-                    break;
-                    case "1":
-                    obj[length].opponent2="Mason Bates";
-                    obj[length].date2="18";
-                    dict.push({
-                        key : "round["+ round + "] " + obj[length].username + " VS " + "Mason Bates" ,
-                        value : "18"
-                    });
-                    break;
-                    case "2":
-                    obj[length].opponent3="Mason Bates";
-                    obj[length].date3="26";
-                    dict.push({
-                        key : "round["+ round + "] " + obj[length].username + " VS " + "Mason Bates" ,
-                        value : "26"
-                    });
-                    break;
-                    case "3":
-                    obj[length].opponent4="Mason Bates";
-                    obj[length].date4="31";
-                    dict.push({
-                        key : "round["+ round + "] " + obj[length].username + " VS " + "Mason Bates" ,
-                        value : "31"
-                    });
-                    break;
-                    
-                }
-            }
-              
-            
         }
        
     }

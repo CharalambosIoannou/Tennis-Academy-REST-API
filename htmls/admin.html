@@ -126,7 +126,7 @@
                   <div class="card-body">
                     <h1>Find User</h1>
                     <form id="usernameform">
-                      <div> Username: <input id="username"> </input> </div>
+                      <div> Username: <input required="" oninvalid="this.setCustomValidity('Please Enter a username')" oninput="setCustomValidity('')" type="text" id="username"> </input> </div>
                       <button  class="btn btn-outline-success" id="getUser">Click Me to Submit</button>                      
                   </form>
                   <button class="btn btn-outline-primary" id="ButtonHide">Click Me to Show/Hide</button>
@@ -163,6 +163,19 @@
                               var username = $("#username").val();
                               $.get("http://127.0.0.1:3000/people/"  +username, 
                                   function (data){
+                                    var dialog = bootbox.alert({
+                                    title: 'These are the data received for the requested user',
+                                    message: "Username: " + data.username + "<br>" + 
+                                              "Forename: " + data.forename + "<br>" + 
+                                              "Surname: " + data.surname + "<br>" + 
+                                              "Age: " + data.age + "<br>" + 
+                                              "Email: " + data.email + "<br>" + 
+                                              "Instructor: " + data.instructor + "<br>" + 
+                                              "Level: " + data.level + "<br>" +
+                                              "<p><b> Click on the button show/hide to display a table of searched users <b></p>",
+                                    backdrop:true
+                                    });
+                                    // do something in the background
                                     var table1 = $("#table1 tbody");
                                     table1.append("<tr><td>" + data.username + "</td><td>"
                                           + data.forename + "</td><td>" 
@@ -342,14 +355,14 @@
                             var date3=x[i].date3;
                             var date4=x[i].date4;
                             var game1=x[i].username + " VS " + x[i].opponent1;
-                            document.getElementById(date1).innerHTML = date1 + "<br>" + "round[" + x[i].round + "]" + " " +  "<br>" + game1;
+                            document.getElementById(date1).innerHTML = date1 + "<br>" + "round[0]" + " " +  "<br>" + game1;
                             if(date2 != ""){
                               var game2= x[i].username + " VS " + x[i].opponent2; 
-                              document.getElementById(date2).innerHTML =date2 + "<br>" + "round[" + x[i].round + "]" + " " +  "<br>" + game2;
+                              document.getElementById(date2).innerHTML =date2 + "<br>" + "round[1]" + " " +  "<br>" + game2;
                             if (date3!="") {                              
                               var game3= x[i].username + " VS " + x[i].opponent3;               
                               
-                              document.getElementById(date3).innerHTML =date3 + "<br>" + "round[" + x[i].round + "]" + " " +  "<br>" + game3;
+                              document.getElementById(date3).innerHTML =date3 + "<br>" + "round[2]" + " " +  "<br>" + game3;
                              
                             }
                           }
@@ -358,14 +371,15 @@
                        
                   
                    });
-            
-            if (localStorage.getItem("countMatches") == null){
+            var round0Started=false;
+            if (sessionStorage.getItem("countMatches") == null){
               var countMatches = 0;
               var round = 0;
+              
               round = parseInt(round);
             }else {
-            var countMatches = localStorage.getItem("countMatches");
-            var round = localStorage.getItem("round");
+            var countMatches = sessionStorage.getItem("countMatches");
+            var round = sessionStorage.getItem("round");
             countMatches= parseInt(countMatches);
             round = parseInt(round);
             }
@@ -373,12 +387,16 @@
                    console.log("storage Matches" + countMatches);
                    console.log("storage Round " + round);
               function formhandler4(){
-                if((round == 0) || (round == 1 && countMatches == 4) || (round == 2 && countMatches == 2) || (round == 3 && countMatches == 1)){
+                console.log("round " + round);
+                console.log("count Matches" + countMatches);
+                   console.log("another Round " + round);
+                if( (round == 0 && countMatches == 0  ) || (round == 1 && countMatches==4) || (round == 2 && countMatches==2 ) || (round == 3 && countMatches==1 )){
+                  round0Started=true;
                   alert("Round over");
                 }else {
                   alert("Round not over");
-                  localStorage.setItem("countMatches", countMatches);
-                  localStorage.setItem("round", round);
+                  sessionStorage.setItem("countMatches", countMatches);
+                  sessionStorage.setItem("round", round);
                   return;
                 }
                  
@@ -391,7 +409,7 @@
                   
                       function (data){
                         console.log(data);
-                        round+=1;
+                        //round+=1;
                         
                         countMatches=0;
                         for (var i=0 ; i < data.length ; i++){
@@ -409,14 +427,15 @@
               $('#randomMatches').on('submit', formhandler4);
            
        
-
             let row = $('tr');
                 row.each((index,row) =>{
                   if(index !== 0) return; // We only want 1 entry of!
               
                   $('td').each((index,day) => { // For each day
                       if($(day).hasClass('grayedout')) return;
-                   $(day).on('click',addApointment); // The part we care about
+                     
+                   $(day).one('click',addApointment); // The part we care about
+                      
                   });
               })
 
@@ -462,7 +481,7 @@
                 var pl1=dayNum[0];
                 var pl2=dayNum[2];
                 bootbox.prompt({
-        title: "This is a prompt with a set of checkbox inputs!",
+        title: "Select the player who won the match in order to proceed to the next round",
         inputType: 'checkbox',
         inputOptions: [
             {
@@ -476,24 +495,39 @@
         ],
         callback: function (result) {
            // console.log(result);
+           if (result != null) {
+             
+          if (result.length > 1) {
+            alert("Please select only one option");
+            return false;
+          } else {
             var winnerPlayer1 = result[0];
             var winnerRound1 = currentRound;
-           // console.log("winner Player: " + winnerPlayer1);
+           console.log("winner Player: " + winnerPlayer1);
            // console.log("winning round: " + winnerRound1);
             $.get("http://127.0.0.1:3000/updateRound" , "player=" + winnerPlayer1 + "&" + "round="+winnerRound1, 
                 function (data){
                //  console.log(data);
                  alert(data);
                    countMatches+=1;
-                   //round +=1;
+                   console.log("old matches " + countMatches);
+                   console.log("old round: " + round);
+                   if((round ==0 && countMatches == 4) || (round == 1 && countMatches == 2) || (round == 2 && countMatches == 1) ){
+                    round +=1;
+                    console.log("new round: " + round);
+                   }
+                  
                 });
         }
-        
+           }else {
+             location.reload();
+           }
+        }
     });
               }
               
               function addApointment() {
-
+                
                   let dayNum = $(this).text();
                   let appointment = test(dayNum);
                
@@ -741,9 +775,10 @@
                   $.getJSON( "http://127.0.0.1:3000/newTournament", function( data ) {
                     
                   });
-                  localStorage.setItem("countMatches", 0);
-                  localStorage.setItem("round", 0);
+                  sessionStorage.setItem("countMatches", 0);
+                  sessionStorage.setItem("round", 0);
                   alert("New tournament has been created");
+                  location.reload(); 
               });
               });
 
