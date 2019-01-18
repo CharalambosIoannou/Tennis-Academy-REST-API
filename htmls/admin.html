@@ -35,14 +35,14 @@
             <li class="nav-item">
                     <a class="nav-link" href="#section3">Create Timetable</a>
             </li>  
-            <li class="nav-item">
+           <!--  <li class="nav-item">
                 <a class="nav-link" href="#section4">Update Rounds</a>
-            </li>     
+            </li>    --> 
             <li class="nav-item">
-              <a class="nav-link" href="#section5">Add User </a>
+              <a class="nav-link" href="#section4">Add User </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#section6">Create New Tournament </a>
+              <a class="nav-link" href="#section5">Create New Tournament </a>
             </li>
             <span style="float:right;"> <button class='btn btn-outline-primary' onClick='logout()'> Logout </button></span>
 
@@ -163,6 +163,13 @@
                               var username = $("#username").val();
                               $.get("http://127.0.0.1:3000/people/"  +username, 
                                   function (data){
+                                    if (data.username === undefined){
+                                      var dialog = bootbox.alert({
+                                    title: 'These are the data received for the requested user',
+                                    message: "No such user exists",
+                                    backdrop:true
+                                    });
+                                    } else {
                                     var dialog = bootbox.alert({
                                     title: 'These are the data received for the requested user',
                                     message: "Username: " + data.username + "<br>" + 
@@ -183,9 +190,12 @@
                                           + data.age + "</td><td>" 
                                           + data.email + "</td><td>" 
                                           + data.instructor + "</td><td>" 
-                                          + data.level + "</td></td>" );            
+                                          + data.level + "</td></td>" );   
+                                    }         
                                             });
+                                  
                               return false;
+                                  
                           };
                           $('#usernameform').on('submit', formhandler);
                       
@@ -246,7 +256,7 @@
                   </script>
   
   
-                
+  <div class="table-responsive">       
         <table border=5 cellspacing=20 cellpadding=20>
             <tr>
             <td colspan="7" align="center"><I>Match Timetable</I></td>
@@ -324,6 +334,7 @@
             </tr>
             
             </table> 
+            </div>
             <form id=randomMatches>
                 
                <!-- <input id="round" /> --> 
@@ -390,36 +401,35 @@
                 console.log("round " + round);
                 console.log("count Matches" + countMatches);
                    console.log("another Round " + round);
+                   
                 if( (round == 0 && countMatches == 0  ) || (round == 1 && countMatches==4) || (round == 2 && countMatches==2 ) || (round == 3 && countMatches==1 )){
                   round0Started=true;
-                  alert("Round over");
+                  var date_array = [];
+                 // alert("Round over");
+
+                  $.get("http://127.0.0.1:3000/createTournament" , "round=" + round, 
+                  
+                  function (data){
+                    console.log(data);
+                    //round+=1;
+                    
+                    countMatches=0;
+                    for (var i=0 ; i < data.length ; i++){
+                      var datePlaying= data[i].value;
+                      var players = data[i].key
+                        console.log(players + " on " + datePlaying);
+                        document.getElementById(datePlaying).innerHTML=datePlaying + '<br>' + players; 
+                                                 
+                    }
+                  });
+                  
                 }else {
                   alert("Round not over");
                   sessionStorage.setItem("countMatches", countMatches);
                   sessionStorage.setItem("round", round);
-                  return;
+                  //return;
                 }
-                 
-                
-                  var date_array = [];
-                  
-                  console.log("round: " + round);
-                  console.log("Matches:  " + countMatches);
-                  $.get("http://127.0.0.1:3000/createTournament" , "round=" + round, 
-                  
-                      function (data){
-                        console.log(data);
-                        //round+=1;
-                        
-                        countMatches=0;
-                        for (var i=0 ; i < data.length ; i++){
-                          var datePlaying= data[i].value;
-                          var players = data[i].key
-                            console.log(players + " on " + datePlaying);
-                            document.getElementById(datePlaying).innerHTML=datePlaying + '<br>' + players;                              
-                        }
-                      });
-                      
+
                   return false;
                   
               };
@@ -515,12 +525,15 @@
                    if((round ==0 && countMatches == 4) || (round == 1 && countMatches == 2) || (round == 2 && countMatches == 1) ){
                     round +=1;
                     console.log("new round: " + round);
+                    
                    }
                   
                 });
         }
            }else {
-             location.reload();
+            sessionStorage.setItem("countMatches", countMatches);
+            sessionStorage.setItem("round", round);
+            location.reload();
            }
         }
     });
@@ -556,7 +569,7 @@
                 </script>
 
     </div>
-    <div id="section4" >  
+  <!--   <div id="section4" >  
         <br>
         <br>
         <br>
@@ -619,8 +632,8 @@
             </div>
           </div>
 
-    </div>
-    <div id="section5" >  
+    </div> -->
+    <div id="section4" >  
         <br>
         <br>
         <br>
@@ -724,7 +737,7 @@
               </script>
     </div>
     </div>
-    <div id="section6">
+    <div id="section5">
       <br>
       <br>
       <br>
