@@ -1,17 +1,21 @@
 "use strict";
+var cors = require('cors');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
-
+app.use(cors());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); 
 
 
 
-app.use(express.static('htmls'));
+app.use(express.static('public'));
 var fs=require('fs');
 var obj = JSON.parse(fs.readFileSync('data.json','utf8'));
+
+
+
 
 
 
@@ -313,10 +317,12 @@ app.get('/updateRound',function (req,resp) {
 
 app.get('/newTournament',function (req,resp) { 
     for (var i=0 ; i < obj.length ; i++){
+       obj[i].date="";
        obj[i].date1="";
        obj[i].date2="";
        obj[i].date3="";
        obj[i].date4="";
+       obj[i].opponent="";
        obj[i].opponent1="";
        obj[i].opponent2="";
        obj[i].opponent3="";

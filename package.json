@@ -1,10 +1,14 @@
 {
   "name": "test",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.14.1"
+  },
   "description": "Assignment",
-  "main": "index.js",
+  "main": "app.js",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "file-system": "^2.2.2",
     "nodemon": "^1.18.9",
