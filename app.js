@@ -14,15 +14,15 @@ app.use(express.static('public'));
 var fs=require('fs');
 var obj = JSON.parse(fs.readFileSync('data.json','utf8'));
 
-
+app.disable('etag');
 
 
 
 
 app.get('/people',function (req,resp) {     
     var myJSON = JSON.stringify(obj);
-    resp.set('Content-Type', 'application/json');
-    resp.json(myJSON);     
+   // resp.set('Content-Type', 'application/json');
+    resp.json(obj);     
 });
 
 app.get('/people/:username',function (req,resp) {

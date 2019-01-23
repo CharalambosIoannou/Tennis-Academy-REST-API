@@ -4,16 +4,33 @@
   <title>LearnTennis-Admin</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+      #section1 {
+        display: none;
+      }
+      #section2 {
+        display: none;
+      }
+      #section3 {
+        display: none;
+      }
+      #section4 {
+        display: none;
+      }
+      
+      
+      </style>
   
   <script type="text/javascript"  src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link href="css/bootstrap.css" rel="stylesheet" />
-  <link href="css/bootstrap-theme.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  
   <link rel="stylesheet" type="text/css" href="stylesheet.css">
 
   <script src="bootbox.min.js"></script>
-  
+ 
 </head>
 
 
@@ -25,39 +42,117 @@
           <span class="navbar-toggler-icon"></span>
         </button>      
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#section1">List Users </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#section2">Find User</a>
-            </li>     
-            
-            <li class="nav-item">
-              <a class="nav-link" href="#section3">Create New Tournament </a>
-            </li>
-
-            <li class="nav-item">
-                    <a class="nav-link" href="#section4">Create Timetable</a>
-            </li>  
-           <!--  <li class="nav-item">
-                <a class="nav-link" href="#section4">Update Rounds</a>
-            </li>    --> 
-            <li class="nav-item">
-              <a class="nav-link" href="#section5">Add User </a>
-            </li>
-            
-            <span style="float:right;"> <button class='btn btn-outline-primary' onClick='logout()'> Logout </button></span>
-
+            <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="dropdd" href=# id="navbardrop" data-toggle="dropdown">Select an action</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" id="listusers" href="#">List Users</a>
+              <a class="dropdown-item" id="finduser"  href="#">Find User</a>
+              <a class="dropdown-item" id="createrounds" href="#">Create rounds</a>
+              <a class="dropdown-item" id="adduser" href="#">Add User</a>
+              <a class="dropdown-item" id="alloptions" href="#">Show all options</a>
+            </div>
+          </li>
+          <span style="float:right;"> <button class='btn btn-outline-primary' onClick='logout()'> Logout </button></span>
 
           </ul>
         </div>    
       </nav>
       <script>
+
       function logout(){
         window.location.replace("http://127.0.0.1:3000/index.html")
         }
+  
       </script>
+
+    
+        <script>
+          var listusersButtonClicked = false;
+          var finduserButtonClicked = false;
+          var createTimetableButtonClicked = false;
+          var adduserButtonClicked = false;
+          var alloptionsButtonClicked = false;
+          
+          $('#dropdd').click(function(){
+            if (listusersButtonClicked === true){
+              $('#section1').hide();
+            }else if (finduserButtonClicked === true){
+              $('#section2').hide();
+            } else if (createTimetableButtonClicked === true){
+              $('#section3').hide();
+            }else if (adduserButtonClicked === true){
+              $('#section4').hide();
+            }
+            else if (alloptionsButtonClicked === true){
+              $('#section1').hide();
+              $('#section2').hide();
+              $('#section3').hide();
+              $('#section4').hide();
+            }
+            
+          });
+
+          $('#listusers').click(function(){
+            finduserButtonClicked =false;
+            createTimetableButtonClicked =false ;
+            adduserButtonClicked = false;
+            console.log("listusersButtonClicked: " + listusersButtonClicked);
+          console.log("finduserButtonClicked: " + finduserButtonClicked);
+          console.log("createTimetableButtonClicked: " + createTimetableButtonClicked);
+            listusersButtonClicked = true;
+            $('#section1').show();
+          });
+          $('#finduser').click(function(){
+            listusersButtonClicked  = false; 
+            createTimetableButtonClicked  = false; 
+            adduserButtonClicked = false;
+            console.log("listusersButtonClicked: " + listusersButtonClicked);
+          console.log("finduserButtonClicked: " + finduserButtonClicked);
+          console.log("createTimetableButtonClicked: " + createTimetableButtonClicked);
+            finduserButtonClicked = true;
+            $('#section2').show();
+          });
+
+          $('#createrounds').click(function(){
+            finduserButtonClicked = false;
+            listusersButtonClicked = false;
+            adduserButtonClicked = false;
+            console.log("listusersButtonClicked: " + listusersButtonClicked);
+          console.log("finduserButtonClicked: " + finduserButtonClicked);
+          console.log("createTimetableButtonClicked: " + createTimetableButtonClicked);
+            createTimetableButtonClicked = true;
+            $('#section3').show();  
+          });
+
+          $('#adduser').click(function(){
+            finduserButtonClicked = false;
+            listusersButtonClicked = false;
+            createTimetableButtonClicked  = false; 
+            console.log("listusersButtonClicked: " + listusersButtonClicked);
+          console.log("finduserButtonClicked: " + finduserButtonClicked);
+          console.log("createTimetableButtonClicked: " + createTimetableButtonClicked);
+          adduserButtonClicked = true;
+            $('#section4').show();  
+          });
+
+          $('#alloptions').click(function(){
+            listusersButtonClicked = false;
+           finduserButtonClicked = false;
+           createTimetableButtonClicked = false;
+           adduserButtonClicked = false;
+           alloptionsButtonClicked = true;
+
+            $('#section1').show();  
+            $('#section2').show();  
+            $('#section3').show();  
+            $('#section4').show();  
+          });
+            
+          
+     
+        </script>
+    </div>
 
 
 
@@ -213,69 +308,9 @@
            
     </div>
 
-    <div id="section3">
-      <br>
-      <br>
-      <br>
-      <br>
-      <div class="container">
-          <div class="card bg-light text-dark">
-            <div class="card-body">
-              <h1>Create New Tournament</h1>
-              <button  type="button"  class="btn btn-outline-info" id="winnerButton">Get winner</button>
-              <button  type="button"  class="btn btn-outline-danger" id="newTourButton">Create new Tournament</button>
-
-            </div>
-            
-          </div>
-        </div>
-        <script>
-           $(document).ready(function () {            
-            $('#winnerButton').click(function () {
-              var counterRound3 =0;
-              var counterRound4 =0;
-              var winner;
-                  $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
-                  $.each( JSON.parse(data), function( key, val ) {
-                    if (val.round==3){
-                      //alert("The winner is: " + val.username);
-                      winner=val.username;
-                      counterRound3 +=1;
-                    } 
-                    if (val.round==4){
-                      //alert("The winner is: " + val.username);
-                      winner=val.username;
-                      counterRound4 +=1;
-                    } 
-                    });
-                    if (counterRound3 == 1){
-                      alert("The winner is: " + winner);
-                    }
-                    if (counterRound4 == 1){
-                      alert("The winner is: " + winner);
-                    }
-                   //alert("Tournament currently in progress");
-                  });
-              });
-              });
-
-              $(document).ready(function () {            
-            $('#newTourButton').click(function () {
-                  $.getJSON( "http://127.0.0.1:3000/newTournament", function( data ) {
-                    
-                  });
-                  sessionStorage.setItem("countMatches", 0);
-                  sessionStorage.setItem("round", 0);
-                  alert("New tournament has been created");
-                  location.reload(); 
-              });
-              });
-
-          
-      
-        </script>
+        
     
-    <div id="section4">
+    <div id="section3">
         <br>
         <br>
         <br>
@@ -283,18 +318,14 @@
         <div class="container">
             <div class="card bg-light text-dark">
               <div class="card-body">
-                <h1>Create Timetable</h1>
-                <p> Here when the users or admin wants to add additional matches then the admin has to press the show users button. Then the admin should select the two users that he/she wants to organize another match and then select the date and then press submit</p>
-
-               
+                <h1>Create rounds</h1>            
                 <button   class="btn btn-outline-info" id="showAllUsers" >Show Users</button>
-                
                 <form id="against">
                   <div id="res"></div>
                   <span>Usernames: <input readonly="readonly" required="" oninvalid="this.setCustomValidity('Please Enter a username')" oninput="setCustomValidity('')" type="text" id="player1"> </span>
                   <span> VS</span>
                   <span> <input readonly="readonly" required="" oninvalid="this.setCustomValidity('Please Enter a username')" oninput="setCustomValidity('')" type="text" id="player2"></span>
-                  <p>Date: <input required="" oninvalid="this.setCustomValidity('Please Enter a date')" oninput="setCustomValidity('')"  type="text1" id="date" /></p>
+                  <span>Date: <input required="" oninvalid="this.setCustomValidity('Please Enter a date')" oninput="setCustomValidity('')"  type="text1" id="date" /></span>
                   <button class="btn btn-outline-dark" > Submit </button>
                 </form>  
                 <script>
@@ -328,7 +359,7 @@
   
   
   <div class="table-responsive">       
-        <table border=5 cellspacing=20 cellpadding=20>
+        <table border=5 cellspacing=15 cellpadding=15>
             <tr>
             <td colspan="7" align="center"><I>Match Timetable</I></td>
             </tr>
@@ -411,8 +442,10 @@
                <!-- <input id="round" /> --> 
                <br>
                 <button class="btn btn-outline-success" id="sendRound"> Proceed to Next Round</button>
-
+                <button  type="button"  class="btn btn-outline-info" id="winnerButton">Get winner</button>
+              <button  type="button"  class="btn btn-outline-danger" id="newTourButton">Create new Tournament</button>
               </form>
+              
 
             </div>
             </div>
@@ -643,9 +676,48 @@
         };
         $('#against').on('submit', formhandler2);
                                
-                </script>
+               
+                      $(document).ready(function () {            
+                       $('#winnerButton').click(function () {
+                         var counterRound3 =0;
+                         var counterRound4 =0;
+                         var winner;
+                             $.getJSON( "http://127.0.0.1:3000/people", function( data ) {
+                             $.each( JSON.parse(data), function( key, val ) {
+                               if (val.round==3){
+                                 //alert("The winner is: " + val.username);
+                                 winner=val.username;
+                                 counterRound3 +=1;
+                               } 
+                               
+                               });
+                               if (counterRound3 == 1){
+                                 alert("The winner is: " + winner);
+                               }
+                               
+                              //alert("Tournament currently in progress");
+                             });
+                         });
+                         });
+           
+                         $(document).ready(function () {            
+                       $('#newTourButton').click(function () {
+                             $.getJSON( "http://127.0.0.1:3000/newTournament", function( data ) {
+                               
+                             });
+                             sessionStorage.setItem("countMatches", 0);
+                             sessionStorage.setItem("round", 0);
+                             alert("New tournament has been created");
+                             location.reload(); 
+                         });
+                         });
+           
+                     
+                 
+                   </script>
 
     </div>
+
   <!--   <div id="section4" >  
         <br>
         <br>
@@ -710,7 +782,7 @@
           </div>
 
     </div> -->
-    <div id="section5" >  
+    <div id="section4" >  
         <br>
         <br>
         <br>
