@@ -1,0 +1,36 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.14.1"
+  },
+  "description": "Assignment",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "file-system": "^2.2.2",
+    "nodemon": "^1.18.9",
+    "supertest": "^3.3.0"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.6"
+  },
+  "scripts": {
+    "test": "jest",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "author": "Charalambos Ioannou",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CharalambosIoannou/Web-Programming-assignment.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CharalambosIoannou/Web-Programming-assignment/issues"
+  },
+  "homepage": "https://github.com/CharalambosIoannou/Web-Programming-assignment#readme"
+}
