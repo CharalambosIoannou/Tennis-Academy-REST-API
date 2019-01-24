@@ -23,7 +23,6 @@
       }
       </style>
   
-  <!-- <script type="text/javascript"  src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
   <link href="css/bootstrap.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -33,8 +32,8 @@
 </head>
 
 
-<body data-spy="scroll" data-target=".navbar" data-offset="50" background="images/background.jpg" > <!-- Use of scroll spy to show the user the section he/she is on the page-->
-  <!-- Navigation bar code-->
+<body data-spy="scroll" data-target=".navbar" data-offset="50"> <!-- Use of scroll spy to show the user the section he/she is on the page-->
+  <!-- Nav bar-->
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">  
       <a class="navbar-brand" href="index.html">Tennis Academy</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -129,7 +128,7 @@
         $('#section4').show();  
       });
     </script>
-    <!-- End of nav bar code -->
+    <!-- End of nav bar -->
 
     <!-- Start of section 1 -->
 
@@ -325,6 +324,7 @@
             </script>  
             <div class="table-responsive">       
               <table border=5 cellspacing=15 cellpadding=15>
+			  <!-- The table design was obtained from https://devask.gr/questions/40487438/creating-a-calendar-in-html -->
                 <tr>
                   <td colspan="7" align="center"><I>Match Timetable</I></td>
                 </tr>              
@@ -598,7 +598,7 @@
           var winner;
           $.getJSON( "http://127.0.0.1:3000/people", function( data ) 
           {
-            $.each( JSON.parse(data), function( key, val ) 
+            $.each( data, function( key, val ) 
             {
               if (val.round==3)
               {
