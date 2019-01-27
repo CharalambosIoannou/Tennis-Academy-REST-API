@@ -324,7 +324,11 @@
             </script>  
             <div class="table-responsive">       
               <table border=5 cellspacing=15 cellpadding=15>
-			  <!-- The table design was obtained from https://devask.gr/questions/40487438/creating-a-calendar-in-html -->
+        <!-- The table design, some css and JS was obtained from https://devask.gr/questions/40487438/creating-a-calendar-in-html.
+        The code was changed slightly. I obtained the HTML code and translated the dates from german to english. I also centered all the elements. Furthermore
+        i deleted some of the dates of the previous and next months and replaced them with the grayedout class. Also some of the CSS code was used as well. Also the jquery
+      code found in the comments section of that website was used in order to make the dates of the calendar clickable. 
+      The rest of the JS code like the pop ups, choosing the winning person and everything else is mine.     -->
                 <tr>
                   <td colspan="7" align="center"><I>Match Timetable</I></td>
                 </tr>              
@@ -468,16 +472,22 @@
          return false;                  
       };             
       $('#randomMatches').on('submit', formhandler4);  
-      //the following 8 lines of code were obtained from the web. Link: https://devask.gr/questions/40487438/creating-a-calendar-in-html
+      /* The table design, some css and JS was obtained from https://devask.gr/questions/40487438/creating-a-calendar-in-html.
+        The following 8 lines of code were used. I did not change anything. Also the code was found in the comments section of that website and it
+        was used to make the dates of the calendar clickable. The rest of the JS code like the pop ups, choosing the winning person and everything else is mine.     */
       let row = $('tr');
-      row.each((index,row) =>{
-        if(index !== 0) return;    
-        $('td').each((index,day) => { 
-            if($(day).hasClass('grayedout')) return;            
+      row.each(function(index,row) {
+        if(index !== 0){
+           return;    
+        }
+        $('td').each(function (index,day) { 
+            if($(day).hasClass('grayedout')){
+              return;  
+            }             
           $(day).one('click',dateClicked);             
         });
       })
-      function test(dayNum)
+      function alertBox(dayNum)
       {
         var string=dayNum;
         var currentRound;
@@ -569,7 +579,7 @@
       function dateClicked() 
       {                
         let dayNum = $(this).text();
-        let appointment = test(dayNum);
+        let appointment = alertBox(dayNum);
       }
       function formhandler2()
       {

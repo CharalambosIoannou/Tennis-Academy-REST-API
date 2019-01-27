@@ -19,6 +19,11 @@ U {
 
 }
 
+/* The table design, some css and JS was obtained from https://devask.gr/questions/40487438/creating-a-calendar-in-html.
+        The following CSS code was used. I did not change anything. This is for the design of the table and it was found below the HTML code of the table */
+
+
+
 table td[data-href] {
         cursor: pointer;
     }
