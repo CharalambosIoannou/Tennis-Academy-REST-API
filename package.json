@@ -12,7 +12,7 @@
     "express": "^4.17.1",
     "file-system": "^2.2.2",
     "nodemon": "^2.0.2",
-    "supertest": "^4.0.2"
+    "supertest": "^6.1.4"
   },
   "devDependencies": {
     "jest": "^26.2.1",
